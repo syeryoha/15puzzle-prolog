@@ -1,4 +1,4 @@
-geraJogadas([Linha1,Linha2,Linha3,Linha4],F1,F2,F3,F4) :-
+geraJogadas([Linha1,Linha2,Linha3,Linha4,_],F1,F2,F3,F4) :-
 	Linha1 = [X1,X2,X3,X4], Linha2 = [X5,X6,X7,X8],
 	Linha3 = [X9,X10,X11,X12], Linha4 = [X13,X14,X15,X16],
 
