@@ -3,7 +3,7 @@ tabuleiroMuitoErrado([[5,6,7,8],[1,2,3,4],[13,14,15,0],[9,10,11,12], 0]).
 tabuleiroErrado([[1,2,4,3],[5,7,6,8],[13,14,0,15],[9,10,11,12], 4]).
 
 :-include(jogadas).
-:-include(profundidade).
+:-include(largura).
 
 busca(Nodo, Lista)  :-
 	busca(Nodo, Lista, []).
@@ -17,7 +17,7 @@ busca(Nodo, Lista, Acumulador) :-
 	 busca(E, Lista1, [E|Acumulador]).
 
 eSolucao(Tabuleiro) :-
-	Tabuleiro == [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0]].
+	tabuleiroCorreto(Tabuleiro).
 
 ordena([], []).
 ordena([H|Tail], ListaOrdenada) :-
@@ -38,6 +38,7 @@ insere(Elemento, [H|Tail], [Elemento, H|Tail]) :-
 
 valor([_, _, _, _, Valor], Valor).
 
+valorTabuleiro([],-1).
 valorTabuleiro([Linha1, Linha2, Linha3, Linha4], Valor) :-
 	valorLinha(Linha1, 1, Valor1),
 	valorLinha(Linha2, 5, Valor2),
