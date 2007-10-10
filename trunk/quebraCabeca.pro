@@ -3,18 +3,27 @@ tabuleiroMuitoErrado([[5,6,7,8],[1,2,3,4],[13,14,15,0],[9,10,11,12], 0]).
 tabuleiroErrado([[1,2,4,3],[5,7,6,8],[13,14,0,15],[9,10,11,12], 4]).
 
 :-include(jogadas).
-:-include(largura).
+:-include(profundidade).
+%:-include(largura).
 
 busca(Nodo, Lista)  :-
-	busca(Nodo, Lista, []).
+	busca(Nodo, Lista, [], []).
 
-busca(Nodo, Lista, Acumulador) :-
+busca(Nodo, Lista, JaVisitados, Acumulador) :-
 	eSolucao(Nodo) ->
+	 (imprimeTabuleiro(Nodo), %temporário, só para depurar
 	 %imprimeCaminho([Nodo|Acumulador]);
-	 true;
-	 expandeFilhos(Nodo, Lista, [E|Lista1]),
-	 %escolheNodo(Lista1, NodoEscolhido),
-	 busca(E, Lista1, [E|Acumulador]).
+	 true);
+	 naoEstaEm(Nodo, JaVisitados) ->
+	 (expandeFilhos(Nodo, Lista, [E|Lista1]),
+	  %escolheNodo(Lista1, NodoEscolhido),
+	  busca(E, Lista1, [Nodo|JaVisitados], [E|Acumulador]));
+	 true.
+
+naoEstaEm(Elemento, []).
+naoEstaEm(Elemento, [E|L]) :-
+	E \== Elemento,
+	naoEstaEm(Elemento,L).
 
 eSolucao(Tabuleiro) :-
 	tabuleiroCorreto(Tabuleiro).
