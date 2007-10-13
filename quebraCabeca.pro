@@ -22,7 +22,7 @@ busca(Nodo, Lista, Acumulador) :-
 
 tenta(Nodo, [Prox|Lista], Acumulador) :-
 	(busca(Nodo, [Prox|Lista], Acumulador) ->
-	 true;
+	 imprimeTabuleiro(Nodo);
 	 tenta(Prox, Lista, Acumulador)
 	).
 	
