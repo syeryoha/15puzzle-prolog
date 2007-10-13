@@ -1,25 +1,31 @@
 tabuleiroCorreto([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0], 15]).
 tabuleiroMuitoErrado([[5,6,7,8],[1,2,3,4],[13,14,15,0],[9,10,11,12], 0]).
-tabuleiroErrado([[1,2,4,3],[5,7,6,8],[13,14,0,15],[9,10,11,12], 4]).
+tabuleiroErrado([[1,2,3,4],[5,6,7,8],[9,10,11,12],[0,13,14,15], 12]).
 
 :-include(jogadas).
 :-include(profundidade).
 %:-include(largura).
 
 busca(Nodo, Lista)  :-
-	busca(Nodo, Lista, [], []).
+	busca(Nodo, Lista, []).
 
-busca(Nodo, Lista, JaVisitados, Acumulador) :-
-	eSolucao(Nodo) ->
-	 (imprimeTabuleiro(Nodo), %temporário, só para depurar
-	 %imprimeCaminho([Nodo|Acumulador]);
-	 true);
-	 naoEstaEm(Nodo, JaVisitados) ->
-	 (expandeFilhos(Nodo, Lista, [E|Lista1]),
+busca(Nodo, Lista, Acumulador) :-
+	(eSolucao(Nodo) ->
+				%imprimeCaminho([Nodo|Acumulador]);
+	 imprimeTabuleiro(Nodo); %temporário, só para depurar
+	 (naoEstaEm(Nodo, Acumulador) ->
+	  expandeFilhos(Nodo, Lista, [E|Lista1]),
 	  %escolheNodo(Lista1, NodoEscolhido),
-	  busca(E, Lista1, [Nodo|JaVisitados], [E|Acumulador]));
-	 true.
+	  tenta(E, Lista1, [Nodo|Acumulador])
+	 )
+	).
 
+tenta(Nodo, [Prox|Lista], Acumulador) :-
+	(busca(Nodo, [Prox|Lista], Acumulador) ->
+	 true;
+	 tenta(Prox, Lista, Acumulador)
+	).
+	
 naoEstaEm(Elemento, []).
 naoEstaEm(Elemento, [E|L]) :-
 	E \== Elemento,
@@ -75,7 +81,7 @@ imprimeCaminho([Tabuleiro|Lista], Pos) :-
 	imprimeTabuleiro(Tabuleiro),nl,nl,
 	imprimeCaminho(Lista, Pos1).
 
-imprimeTabuleiro([Linha1, Linha2, Linha3, Linha4]) :-
+imprimeTabuleiro([Linha1, Linha2, Linha3, Linha4, Valor]) :-
 	write(' -------------------'),nl,
 	write('|'),imprimeLinha(Linha1),nl,
 	write(' -------------------'),nl,
