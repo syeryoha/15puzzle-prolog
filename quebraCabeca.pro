@@ -1,10 +1,11 @@
 tabuleiroCorreto([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0], 15]).
 tabuleiroMuitoErrado([[5,6,7,8],[1,2,3,4],[13,14,15,0],[9,10,11,12], 0]).
 tabuleiroErrado([[1,2,3,4],[5,6,7,8],[9,10,11,12],[0,13,14,15], 12]).
+tabuleiroErrado2(Y):- X= [[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12]],valorTabuleiro(X,V),append(X,[V],Y).
 
 :-include(jogadas).
-:-include(profundidade).
-%:-include(largura).
+%:-include(profundidade).
+:-include(largura).
 
 busca(Nodo, Lista)  :-
 	busca(Nodo, Lista, []).
@@ -22,7 +23,7 @@ busca(Nodo, Lista, Acumulador) :-
 
 tenta(Nodo, [Prox|Lista], Acumulador) :-
 	(busca(Nodo, [Prox|Lista], Acumulador) ->
-	 imprimeTabuleiro(Nodo);
+	 true;
 	 tenta(Prox, Lista, Acumulador)
 	).
 	
