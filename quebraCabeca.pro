@@ -5,8 +5,10 @@ tabuleiroErrado([[1,2,3,4],[5,6,7,8],[9,10,11,0],[13,14,15,12],14]).
 tabuleiroErrado2(Y):- X= [[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12]],valorTabuleiro(X,V),append(X,[V],Y).
 
 :-include(jogadas).
-:-include(profundidade).
+%:-include(profundidade).
 %:-include(largura).
+:-include(gradiente).
+%:-include(escalada).
 
 busca(Nodo, Lista)  :-
 	busca(Nodo, Lista, []).
@@ -18,14 +20,18 @@ busca(Nodo, Lista, Acumulador) :-
 	 (naoEstaEm(Nodo, Acumulador) ->
 	  expandeFilhos(Nodo, Lista, [E|Lista1]),
 	  %escolheNodo(Lista1, NodoEscolhido),
-	  write('Expandindo pai:'), nl,
-	  imprimeTabuleiro(Nodo),nl,
-	  write('Filho:'),nl,
-	  imprimeTabuleiro(E), nl,
-	  get_char(_),
+	  debuga(Nodo,E),
 	  tenta(E, Lista1, [Nodo|Acumulador])
 	 )
 	).
+
+debuga(Nodo,Filho) :-
+	write('Expandindo pai:'), nl,
+	imprimeTabuleiro(Nodo),nl,
+	write('Filho:'),nl,
+	imprimeTabuleiro(Filho), nl,
+	get_char(_).
+
 
 tenta(Nodo, [Prox|Lista], Acumulador) :-
 	(busca(Nodo, [Prox|Lista], Acumulador) ->
