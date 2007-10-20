@@ -1,4 +1,4 @@
-tabuleiroCorreto([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0], 15]).
+tabuleiroCorreto([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0], _]).
 tabuleiroMuitoErrado([[5,6,7,8],[1,2,3,4],[13,14,15,0],[9,10,11,12], 0]).
 %tabuleiroErrado([[1,2,3,4],[5,6,7,8],[9,10,11,12],[0,13,14,15], 12]).
 tabuleiroErrado([[1,2,3,4],[5,6,7,8],[9,10,11,0],[13,14,15,12],14]).
@@ -7,8 +7,9 @@ tabuleiroErrado2(Y):- X= [[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12]],valorTa
 :-include(jogadas).
 %:-include(profundidade).
 %:-include(largura).
-:-include(gradiente).
+%:-include(gradiente).
 %:-include(escalada).
+:-include(aestrela).
 
 busca(Nodo, Lista)  :-
 	busca(Nodo, Lista, []).
@@ -20,16 +21,17 @@ busca(Nodo, Lista, Acumulador) :-
 	 (naoEstaEm(Nodo, Acumulador) ->
 	  expandeFilhos(Nodo, Lista, [E|Lista1]),
 	  %escolheNodo(Lista1, NodoEscolhido),
-	  debuga(Nodo,E),
+	  debuga(Nodo,E,Lista1),
 	  tenta(E, Lista1, [Nodo|Acumulador])
 	 )
 	).
 
-debuga(Nodo,Filho) :-
+debuga(Nodo,Filho,NosAbertos) :-
 	write('Expandindo pai:'), nl,
 	imprimeTabuleiro(Nodo),nl,
 	write('Filho:'),nl,
 	imprimeTabuleiro(Filho), nl,
+%	imprimeLista(NosAbertos),
 	get_char(_).
 
 
@@ -54,6 +56,12 @@ ordena([H|Tail], ListaOrdenada) :-
 	ordena(Tail, TailOrdenado),
 	insere(H, TailOrdenado, ListaOrdenada).
 
+ordenaMenor([], []).
+ordenaMenor([H|Tail], ListaOrdenada) :-
+	ordenaMenor(Tail, TailOrdenado),
+	insereMenor(H, TailOrdenado, ListaOrdenada).
+
+
 insere(Elemento, [], [Elemento]).
 insere(Elemento, [H|Tail], [H|Tail1]) :-
 	valor(Elemento, Valor1),
@@ -64,7 +72,20 @@ insere(Elemento, [H|Tail], [H|Tail1]) :-
 insere(Elemento, [H|Tail], [Elemento, H|Tail]) :-
 	valor(Elemento, Valor1),
 	valor(H, Valor2),
-	Valor1 > Valor2.	
+	Valor1 > Valor2.
+
+insereMenor(Elemento, [], [Elemento]).
+insereMenor(Elemento, [H|Tail], [H|Tail1]) :-
+	valor(Elemento, Valor1),
+	valor(H, Valor2),
+	Valor1 >= Valor2,
+	!,
+	insereMenor(Elemento, Tail, Tail1).
+insereMenor(Elemento, [H|Tail], [Elemento, H|Tail]) :-
+	valor(Elemento, Valor1),
+	valor(H, Valor2),
+	Valor1 < Valor2.	
+
 
 valor([_, _, _, _, Valor], Valor).
 
@@ -120,3 +141,6 @@ imprimeLinha([E|L]) :-
 	  write(' '))),
 	write('|'),
 	imprimeLinha(L).
+
+imprimeLista([]).
+imprimeLista([H|T]) :- write(H),nl,imprimeLista(T).
