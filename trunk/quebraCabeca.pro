@@ -9,7 +9,8 @@ tabuleiroErrado2(Y):- X= [[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12]],valorTa
 %:-include(largura).
 %:-include(gradiente).
 %:-include(escalada).
-:-include(aestrela).
+%:-include(aestrela).
+:-include(beam).
 
 busca(Nodo, Lista)  :-
 	busca(Nodo, Lista, []).
@@ -31,7 +32,7 @@ debuga(Nodo,Filho,NosAbertos) :-
 	imprimeTabuleiro(Nodo),nl,
 	write('Filho:'),nl,
 	imprimeTabuleiro(Filho), nl,
-%	imprimeLista(NosAbertos),
+	imprimeLista(NosAbertos),
 	get_char(_).
 
 
