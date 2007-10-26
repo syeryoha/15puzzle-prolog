@@ -12,6 +12,40 @@ tabuleiroErrado2(Y):- X= [[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12]],valorTa
 %:-include(aestrela).
 :-include(beam).
 
+min(5).
+max(10).
+
+tabuleiroAleatorio(Aleatorio) :-
+	randomize, %deverá ser movido para a função principal
+        min(Min),
+	max(Max),
+	random(Min, Max, R),
+	tabuleiroCorreto(Base),
+	variasJogadasAleatorias(Base, Aleatorio, R).
+
+variasJogadasAleatorias(Base, Base, 0) :- !.
+variasJogadasAleatorias(Base, Aleatorio, N) :-
+	N1 is N - 1,
+	jogadaAleatoria(Base, NovoTabuleiro),
+	variasJogadasAleatorias(NovoTabuleiro, Aleatorio, N1).
+	
+
+jogadaAleatoria(Base, Aleatorio) :-
+	geraJogadas(Base, F1, F2, F3, F4),
+	random(1, 5, Filho),
+	((Filho =:= 1 ->
+	    Tentativa = F1);
+	(Filho =:= 2 ->
+	    Tentativa = F2);
+	(Filho =:= 3 ->
+	    Tentativa = F3);
+	(Filho =:= 4 ->
+	    Tentativa = F4)),
+	((Tentativa \== [] ->
+	    (valorTabuleiro(Tentativa, V), %Na verdade, só é necessário calcular o valor do tabuleiro final
+	    append(Tentativa, [V], Aleatorio));
+	    jogadaAleatoria(Base, Aleatorio))).
+
 busca(Nodo, Lista)  :-
 	busca(Nodo, Lista, []).
 
