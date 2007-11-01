@@ -1,4 +1,3 @@
-valor([_, _, _, _, Valor], Valor).
 
 valorTabuleiro([],-1).
 valorTabuleiro(Tabuleiro, Valor) :-
