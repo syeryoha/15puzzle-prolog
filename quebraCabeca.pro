@@ -9,10 +9,10 @@ tabuleiroErrado2(Y):- X= [[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12]],valorTa
 %:-include(largura).
 %:-include(gradiente).
 %:-include(escalada).
-:-include(aestrela).
+%:-include(aestrela).
 %:-include(beam).
 %:-include(heuristicaPosicao).
-%:-include(idaestrela). % que feio...
+:-include(idaestrela). % que feio...
 :-include(heuristicaManhattan).
 
 min(5).
