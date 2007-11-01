@@ -1,25 +1,35 @@
 buscaIDA(Nodo, Lista) :-
-	buscaIDA(Nodo, Lista, [], 1, -1).
+	buscaIDA(Nodo, Lista, [], Nodo, 1, -1).
 
-buscaIDA(Nodo, [], Acumulador, _, -1) :- !, fail.
-buscaIDA(Nodo, [], Acumulador, C, C1) :- !, buscaIDA(Nodo, [], Acumulador, C, C).
+%buscaIDA(Nodo, [], Acumulador, ListaInicial, _, -1) :- !, fail.
+%buscaIDA(Nodo, [], Acumulador, ListaInicial, C, C1) :- !, buscaIDA(ListaInicial, [], Acumulador, ListaInicial, C1, -1).
 
-buscaIDA(Nodo, Lista, Acumulador, C, C1) :-
+buscaIDA(Nodo, Lista, Acumulador, ListaInicial, C, C1) :-
 	(eSolucao(Nodo) ->
 	    imprimeTabuleiro(Nodo);
-	    (naoEstaEm(Nodo, Acumulador) ->
-		expandeFilhosIDA(Nodo, Lista, [E|Lista1], C, C2),
-		debuga(Nodo, E, Lista1),
-		tentaIDA(E, Lista1, [Nodo|Acumulador], C2)
+	    (
+	      naoEstaEm(Nodo, Acumulador),
+	      (
+		expandeFilhosIDA(Nodo, Lista, [E|Lista1], C1, C2) ->
+		(
+		  debuga(Nodo, E, Lista1),
+		  tentaIDA(E, Lista1, [Nodo|Acumulador], ListaInicial, C, C2)
+		);
+		%Não consegui pegar o primeiro elemento da lista de nós abertos. Portanto, ela está vazia. Temos que recomeçar uma nova iteração, com o novo valor de C, permitindo aumentar a "abrangência" da busca do algoritmo
+		(
+		  C1 =:= -1 -> fail; %se o C da próxima iteração é infinito (-1), falhamos
+		  buscaIDA(ListaInicial, [], Acumulador, ListaInicial, C1, -1) % Se há um C, vamos começar tudo de novo com ele
+		)
+	      )
 	    )
 	).
 
-tentaIDA(Nodo, [Prox|Lista], Acumulador, C) :-
-	(buscaIDA(Nodo, [Prox|Lista], Acumulador, C) ->
+tentaIDA(Nodo, [Prox|Lista], Acumulador, ListaInicial, C, C1) :-
+	(buscaIDA(Nodo, [Prox|Lista], Acumulador, ListaInicial, C, C1) ->
 	 true;
 	 write('Falhou. Indo para:'),nl,
 	 imprimeTabuleiro(Prox), nl,
-	 tentaIDA(Prox, Lista, Acumulador, C)
+	 tentaIDA(Prox, Lista, Acumulador, ListaInicial, C, C1)
 	).
 
 expandeFilhosIDA(Nodo, Lista, ListaR, C, C1) :-
