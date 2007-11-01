@@ -12,6 +12,7 @@ distManhattan(XOrig, YOrig, XDest, YDest, Dist) :-
 	Y2 is abs(Y1),
 	Dist is X2 + Y2.
 
+
 valorTabuleiro([], -1). %ou será valorTabuleiro([], INF)?
 
 valorTabuleiro([Linha1, Linha2, Linha3, Linha4], Valor) :-

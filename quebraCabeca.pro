@@ -9,14 +9,16 @@ tabuleiroErrado2(Y):- X= [[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12]],valorTa
 %:-include(largura).
 %:-include(gradiente).
 %:-include(escalada).
-%:-include(aestrela).
+:-include(aestrela).
 %:-include(beam).
-:-include(heuristicaPosicao).
-:-include(idaestrela). % que feio...
-%:-include(heuristicaManhattan).
+%:-include(heuristicaPosicao).
+%:-include(idaestrela). % que feio...
+:-include(heuristicaManhattan).
 
 min(5).
 max(10).
+
+valor([_,_,_,_,Valor],Valor).
 
 tabuleiro([Linha1, Linha2, Linha3, Linha4, Valor], [Linha1, Linha2, Linha3, Linha4]).
 
@@ -55,13 +57,21 @@ busca(Nodo, Lista)  :-
 	busca(Nodo, Lista, []).
 
 busca(Nodo, Lista, Acumulador) :-
-	(eSolucao(Nodo) ->
-				%imprimeCaminho([Nodo|Acumulador]);
-	 imprimeTabuleiro(Nodo); %temporário, só para depurar
+	(eSolucao(Nodo) -> 
+	%	imprimeCaminho([Nodo|Acumulador]),
+	 ( statistics,
+	   %imprimeLista(Lista),
+	   eliminaRepeticoes(Lista,ListaU),
+	   write('Número de elementos na lista de nós fechados: '),
+	   length(Acumulador, TamAcumulador),
+	   write(TamAcumulador), nl,
+	   write('Número de elementos na lista de nós abertos: '),
+	   length(ListaU, TamListaU),
+	   write(TamListaU), nl
+	 ) ;			%temporário, só para depurar
 	 (naoEstaEm(Nodo, Acumulador) ->
 	  expandeFilhos(Nodo, Lista, [E|Lista1]),
-	  %escolheNodo(Lista1, NodoEscolhido),
-	  debuga(Nodo,E,Lista1),
+%	  debuga(Nodo,E,Lista1),
 	  tenta(E, Lista1, [Nodo|Acumulador])
 	 )
 	).
@@ -78,8 +88,8 @@ debuga(Nodo,Filho,NosAbertos) :-
 tenta(Nodo, [Prox|Lista], Acumulador) :-
 	(busca(Nodo, [Prox|Lista], Acumulador) ->
 	 true;
-	 write('Falhou. Indo para:'),nl,
-	 imprimeTabuleiro(Prox), nl,
+%	 write('Falhou. Indo para:'),nl,
+%	 imprimeTabuleiro(Prox), nl,
 	 tenta(Prox, Lista, Acumulador)
 	).
 	
@@ -91,16 +101,20 @@ naoEstaEm(Elemento, [E|L]) :-
 eSolucao(Tabuleiro) :-
 	tabuleiroCorreto(Tabuleiro).
 
+%ordena([], []).
+% ordena([H|Tail], ListaOrdenada) :-
+% 	ordena(Tail, TailOrdenado),
+% 	insere(H, TailOrdenado, ListaOrdenada).
+
+% ordenaMenor([], []).
+% ordenaMenor([H|Tail], ListaOrdenada) :-
+% 	ordenaMenor(Tail, TailOrdenado),
+% 	insereMenor(H, TailOrdenado, ListaOrdenada).
+
 ordena([], []).
 ordena([H|Tail], ListaOrdenada) :-
-	ordena(Tail, TailOrdenado),
-	insere(H, TailOrdenado, ListaOrdenada).
-
-ordenaMenor([], []).
-ordenaMenor([H|Tail], ListaOrdenada) :-
-	ordenaMenor(Tail, TailOrdenado),
-	insereMenor(H, TailOrdenado, ListaOrdenada).
-
+ 	ordena(Tail, TailOrdenado),
+ 	insereMenor(H, TailOrdenado, ListaOrdenada).
 
 insere(Elemento, [], [Elemento]).
 insere(Elemento, [H|Tail], [H|Tail1]) :-
@@ -163,3 +177,16 @@ imprimeLinha([E|L]) :-
 
 imprimeLista([]).
 imprimeLista([H|T]) :- write(H),nl,imprimeLista(T).
+
+eliminaRepeticoes([], []).
+eliminaRepeticoes([H|T],R) :-
+	member(H,T),
+	!,
+	eliminaRepeticoes(T,R).
+
+eliminaRepeticoes([H|T], [H|R]) :-
+	\+member(H,T),
+	!,
+	eliminaRepeticoes(T, R).
+
+%eliminaRepeticoes(T, R).
