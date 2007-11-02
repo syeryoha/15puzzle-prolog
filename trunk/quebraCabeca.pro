@@ -92,6 +92,9 @@ debuga(Nodo,Filho,NosAbertos) :-
 	get_char(_).
 
 
+% tenta(Nodo, [], Acumulador) :-
+% 	busca(Nodo, [], Acumulador). %% ** AVALIAR SE É NECESSÁRIO!
+
 tenta(Nodo, [Prox|Lista], Acumulador) :-
 	(busca(Nodo, [Prox|Lista], Acumulador) ->
 	 true;
