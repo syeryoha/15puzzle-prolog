@@ -4,23 +4,26 @@ tabuleiroMuitoErrado([[5,6,7,8],[1,2,3,4],[13,14,15,0],[9,10,11,12], 0]).
 tabuleiroErrado([[1,2,3,4],[5,6,7,8],[9,10,11,0],[13,14,15,12],14]).
 tabuleiroErrado2(Y):- X= [[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12]],valorTabuleiro(X,V),append(X,[V],Y).
 
+tabuleiroAest([[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12],[0,10]]).
+
 :-include(jogadas).
 %:-include(profundidade).
 %:-include(largura).
 %:-include(gradiente).
 %:-include(escalada).
-%:-include(aestrela).
+:-include(aestrela).
 %:-include(beam).
 %:-include(heuristicaPosicao).
-:-include(idaestrela). % que feio...
+%:-include(idaestrela). % que feio...
 :-include(heuristicaManhattan).
 
 min(5).
 max(10).
 
-valor([_,_,_,_,Valor],Valor).
-
-tabuleiro([Linha1, Linha2, Linha3, Linha4, Valor], [Linha1, Linha2, Linha3, Linha4]).
+valor([_,_,_,_,[CustoCaminho, Valor]],Valor).
+custoCaminho([_,_,_,_,[CustoCaminho, Valor]],CustoCaminho).
+retornaTabuleiro([Linha1, Linha2, Linha3, Linha4, [CustoCaminho, Valor]], [Linha1, Linha2, Linha3, Linha4]).
+criaTabuleiro([Linha1, Linha2, Linha3, Linha4], CustoCaminho, Valor, [Linha1, Linha2, Linha3, Linha4, [CustoCaminho, Valor]]).
 
 tabuleiroAleatorio(Aleatorio) :-
 	randomize, %deverá ser movido para a função principal
