@@ -1,7 +1,7 @@
 tabuleiroCorreto([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0], _]).
 tabuleiroMuitoErrado([[5,6,7,8],[1,2,3,4],[13,14,15,0],[9,10,11,12], 0]).
-%tabuleiroErrado([[1,2,3,4],[5,6,7,8],[9,10,11,12],[0,13,14,15], 12]).
-tabuleiroErrado([[1,2,3,4],[5,6,7,8],[9,10,11,0],[13,14,15,12],14]).
+%tabuleiroErrado([[1,2,3,4],[5,6,7,8],[9,10,11,12],[0,13,14,15]2]).
+tabuleiroErrado([[1,2,3,4],[5,6,7,8],[9,10,11,0],[13,14,15,12]]).
 tabuleiroErrado2([[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12]]).
 
 tabuleiroAest([[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12],[0,10]]).
@@ -22,7 +22,8 @@ principal(B,H,X) :-
 	( nl,write('Erro na passagem de parametros'),nl,fail) ))))))),
 	valorTabuleiro(X,V),
 	((B == aestrela ; B == idaestrela) -> V1 = [0,V] ; V1 = V),
-	append(X,[V1],X2),busca(X2,[]).
+	append(X,[V1],X2),
+	( B == idaestrela -> buscaIDA(X2,[]) ; busca(X2,[])).
 
 min(5).
 max(10).
