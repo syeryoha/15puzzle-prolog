@@ -28,3 +28,7 @@ expandeFilhos(Nodo, Lista, ListaR) :-
 concatSol(S1,S2,R) :-
 	S1 \= [[_]] -> (S2 \= [[_]] -> append(S1,S2,R) ; R = S1) ;
 	(S2 \= [[_]] -> R = S2 ; R = [[-1]]).
+
+valor([_,_,_,_,[CustoCaminho, Valor]],Valor).
+custoCaminho([_,_,_,_,[CustoCaminho, Valor]],CustoCaminho).
+retornaTabuleiro([Linha1, Linha2, Linha3, Linha4, [CustoCaminho, Valor]], [Linha1, Linha2, Linha3, Linha4]).
