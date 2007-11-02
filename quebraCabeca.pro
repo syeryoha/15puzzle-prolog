@@ -2,28 +2,32 @@ tabuleiroCorreto([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0], _]).
 tabuleiroMuitoErrado([[5,6,7,8],[1,2,3,4],[13,14,15,0],[9,10,11,12], 0]).
 %tabuleiroErrado([[1,2,3,4],[5,6,7,8],[9,10,11,12],[0,13,14,15], 12]).
 tabuleiroErrado([[1,2,3,4],[5,6,7,8],[9,10,11,0],[13,14,15,12],14]).
-tabuleiroErrado2(Y):- X= [[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12]],valorTabuleiro(X,V),append(X,[V],Y).
+tabuleiroErrado2([[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12]]).
 
 tabuleiroAest([[1,2,7,3],[5,10,6,4],[9,0,11,8],[13,14,15,12],[0,10]]).
 
 :-include(jogadas).
-%:-include(profundidade).
-%:-include(largura).
-%:-include(gradiente).
-%:-include(escalada).
-:-include(aestrela).
-%:-include(beam).
-%:-include(heuristicaPosicao).
-%:-include(idaestrela). % que feio...
-:-include(heuristicaManhattan).
+
+principal(B,H,X) :-
+	( H == manhattan -> [heuristicaManhattan] ;
+	( H == posicao -> [heuristicaPosicao] ;
+	nl,write('Erro na passagem dos parametros'),nl,fail) ),
+	( B == profundidade -> [profundidade] ;
+	( B == largura -> [largura] ; 
+	( B == gradiente -> [gradiente] ;
+	( B == escalada -> [escalada] ;
+	( B == aestrela -> [aestrela] ;
+	( B == beam -> [beam] ;
+	( B == idaestrela -> [idaestrela] ;
+	( nl,write('Erro na passagem de parametros'),nl,fail) ))))))),
+	valorTabuleiro(X,V),
+	((B == aestrela ; B == idaestrela) -> V1 = [0,V] ; V1 = V),
+	append(X,[V1],X2),busca(X2,[]).
 
 min(5).
 max(10).
 
-valor([_,_,_,_,[CustoCaminho, Valor]],Valor).
-custoCaminho([_,_,_,_,[CustoCaminho, Valor]],CustoCaminho).
-retornaTabuleiro([Linha1, Linha2, Linha3, Linha4, [CustoCaminho, Valor]], [Linha1, Linha2, Linha3, Linha4]).
-criaTabuleiro([Linha1, Linha2, Linha3, Linha4], CustoCaminho, Valor, [Linha1, Linha2, Linha3, Linha4, [CustoCaminho, Valor]]).
+valor([_,_,_,_,Valor],Valor).
 
 tabuleiroAleatorio(Aleatorio) :-
 	randomize, %deverá ser movido para a função principal
