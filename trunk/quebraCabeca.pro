@@ -41,7 +41,7 @@ valor([_,_,_,_,Valor],Valor).
 tabuleiroAleatorio(Aleatorio,Passos) :-
 	randomize,
 	tabuleiroCorreto(Base),
-	variasJogadasAleatorias(Base,Aleatorio,Passos).
+	variasJogadasAleatorias(Base,Aleatorio,Passos,[Base]).
 
 variasJogadasAleatorias(Base, Base, 0,_) :- !.
 variasJogadasAleatorias(Base, Aleatorio, N,Caminho) :-
