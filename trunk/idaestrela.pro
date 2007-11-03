@@ -15,7 +15,7 @@ buscaIDA([Nodo|Lista], Acumulador, ListaInicial, C, C1) :-
 	   (
 	    ListaR = [E|Lista1] ->
 	    (
-	     %debugaIDA(Nodo, E, Lista1, C, C2),
+	     debugaIDA(Nodo, E, Lista1, C, C2),
 	     tentaIDA([E|Lista1], [Nodo|Acumulador], ListaInicial, C, C2)
 	    );
 	   %Não consegui pegar o primeiro elemento da lista de nós abertos. Portanto, ela está vazia. Temos que recomeçar uma nova iteração, com o novo valor de C, permitindo aumentar a "abrangência" da busca do algoritmo

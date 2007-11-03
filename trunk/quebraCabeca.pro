@@ -25,25 +25,33 @@ principal(B,H,X) :-
 	append(X,[V1],X2),
 	( B == idaestrela -> buscaIDA(X2,[]) ; busca(X2,[])).
 
-min(5).
-max(10).
+%min(5).
+%max(10).
 
 valor([_,_,_,_,Valor],Valor).
 
-tabuleiroAleatorio(Aleatorio) :-
-	randomize, %deverá ser movido para a função principal
-        min(Min),
-	max(Max),
-	random(Min, Max, R),
-	tabuleiroCorreto(Base),
-	variasJogadasAleatorias(Base, Aleatorio, R).
+%tabuleiroAleatorio(Aleatorio) :-
+%	randomize, %deverá ser movido para a função principal
+%        min(Min),
+%	max(Max),
+%	random(Min, Max, R),
+%	tabuleiroCorreto(Base),
+%	variasJogadasAleatorias(Base, Aleatorio, R).
 
-variasJogadasAleatorias(Base, Base, 0) :- !.
-variasJogadasAleatorias(Base, Aleatorio, N) :-
+tabuleiroAleatorio(Aleatorio,Passos) :-
+	randomize,
+	tabuleiroCorreto(Base),
+	variasJogadasAleatorias(Base,Aleatorio,Passos).
+
+variasJogadasAleatorias(Base, Base, 0,_) :- !.
+variasJogadasAleatorias(Base, Aleatorio, N,Caminho) :-
 	N1 is N - 1,
-	jogadaAleatoria(Base, NovoTabuleiro),
-	variasJogadasAleatorias(NovoTabuleiro, Aleatorio, N1).
+	jogadaAleatoriaInt(Base, NovoTabuleiro,Caminho),
+	variasJogadasAleatorias(NovoTabuleiro, Aleatorio, N1, [NovoTabuleiro|Caminho]).
 	
+jogadaAleatoriaInt(Base,Al,Lista) :-
+	jogadaAleatoria(Base,Al1),
+	(member(Al1,Lista) -> jogadaAleatoriaInt(Base,Al,Lista) ; Al = Al1).
 
 jogadaAleatoria(Base, Aleatorio) :-
 	geraJogadas(Base, F1, F2, F3, F4),
