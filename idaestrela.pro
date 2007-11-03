@@ -35,7 +35,7 @@ buscaIDA([Nodo|Lista], Acumulador, ListaInicial, C, C1) :-
 debugaIDA(Nodo, Filho, NosAbertos, C, ProxC) :-
 	write('C: '), write(C), nl,
 	write('ProxC: '), write(ProxC), nl,
-	imprimeLista(NosAbertos),
+	imprimeLista([Nodo, Filho|NosAbertos]),
 	get_char(_).
 
 
@@ -61,10 +61,14 @@ expandeFilhosIDA(Nodo, Lista, ListaR, C, C1, C2) :-
 	valorTabuleiro(F4,VF4),
 	
 	CustoCaminho is VN + 1,
-	VTF1 is VF1+CustoCaminho,
-	VTF2 is VF2+CustoCaminho,
-	VTF3 is VF3+CustoCaminho,
-	VTF4 is VF4+CustoCaminho,
+% 	VTF1 is VF1+CustoCaminho,
+% 	VTF2 is VF2+CustoCaminho,
+% 	VTF3 is VF3+CustoCaminho,
+% 	VTF4 is VF4+CustoCaminho,
+	soma(VF1, CustoCaminho, VTF1),
+	soma(VF2, CustoCaminho, VTF2),
+	soma(VF3, CustoCaminho, VTF3),
+	soma(VF4, CustoCaminho, VTF4),
 	
 	append(F1,[[CustoCaminho,VTF1]],S1),
 	append(F2,[[CustoCaminho,VTF2]],S2),
@@ -80,11 +84,17 @@ expandeFilhosIDA(Nodo, Lista, ListaR, C, C1, C2) :-
 	concatsolIDA(Fs4,Lista,ListaNO),
 	ordena(ListaNO,ListaR).
 
+soma(-1, CustoCaminho, -1) :- !.
+soma(Valor, CustoCaminho, Total) :-
+	Total is Valor+CustoCaminho.
+
 elimina(Filho1, Filho2, Filho3, Filho4, Sobrevivente1, Sobrevivente2, Sobrevivente3, Sobrevivente4, C, C1, NovoC) :-
 	assassino(Filho1, Sobrevivente1, C, C1, C2),
 	assassino(Filho2, Sobrevivente2, C, C2, C3),
 	assassino(Filho3, Sobrevivente3, C, C3, C4),
 	assassino(Filho4, Sobrevivente4, C, C4, NovoC).
+
+assassino([[X,-1]], [[X,-1]], Criterio, C1, C1) :- !.
 
 assassino(Vitima, Sobrevivente, Criterio, C1, C2) :-
 	valor(Vitima, Valor),
