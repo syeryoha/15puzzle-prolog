@@ -1,10 +1,11 @@
+/*posicaoCorreta(+Nodo,+X,+Y) - Retorna a posição (X, Y) correta de uma peça do tabuleiro (Nodo)*/
 posicaoCorreta(0, 3, 3) :- !.
-
 posicaoCorreta(N, X, Y) :-
 	N1 is N-1,
 	X is N1 // 4,
 	Y is N1 rem 4.
 
+/*distManhattan(+XOrig, +YOrig, +XDest, +YDest, -Dist) - Dada uma origem (XOrig, YOrig) e um destino (XDest, YDest), calcula a distância de Manhattan em Dist*/
 distManhattan(XOrig, YOrig, XDest, YDest, Dist) :-
 	X1 is XDest - XOrig,
 	Y1 is YDest - YOrig,
@@ -12,9 +13,8 @@ distManhattan(XOrig, YOrig, XDest, YDest, Dist) :-
 	Y2 is abs(Y1),
 	Dist is X2 + Y2.
 
-
-valorTabuleiro([], -1). %ou será valorTabuleiro([], INF)?
-
+/*valorTabuleiro(+Tabuleiro, -Valor) - Calcula o Valor de um Tabuleiro*/
+valorTabuleiro([], -1). 
 valorTabuleiro([Linha1, Linha2, Linha3, Linha4], Valor) :-
 	valorLinha(Linha1, 0, Valor1),
 	valorLinha(Linha2, 1, Valor2),
@@ -22,11 +22,10 @@ valorTabuleiro([Linha1, Linha2, Linha3, Linha4], Valor) :-
 	valorLinha(Linha4, 3, Valor4),
 	Valor is Valor1 + Valor2 + Valor3 + Valor4.
 
+/*valorLinha(+Linha, +Número da Linha, -Valor) - Com base no Número da Linha, calcula o Valor de uma Linha do tabuleiro*/
 valorLinha(Linha, NLinha, Valor) :-
 	valorLinha(Linha, NLinha, 0, Valor, 0).
-
-valorLinha([], Nlinha, NColuna, Valor, Valor).
-
+valorLinha([], _, _, Valor, Valor).
 valorLinha([E|L], NLinha, NColuna, Valor, Acc) :-
 	posicaoCorreta(E, XCorreto, YCorreto),
 	distManhattan(NLinha, NColuna, XCorreto, YCorreto, Dist),

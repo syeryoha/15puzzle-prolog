@@ -1,3 +1,4 @@
+/*expandeFilhos(+Nodo, +Lista, -ListaR) - Expande os filhos do Nodo, colocando-os na Lista, gerando assim, a ListaR*/
 expandeFilhos(Nodo, Lista, ListaR) :-
 	geraJogadas(Nodo,F1,F2,F3,F4),
 	custoCaminho(Nodo,VN),
@@ -25,10 +26,23 @@ expandeFilhos(Nodo, Lista, ListaR) :-
 	concatSol(Fs4,Lista,ListaNO),
 	ordena(ListaNO,ListaR).
 
+/*concatSol(+Solução1, +Solução2, -Resultado) - Concatena a Solução1 com a Solução2, produzindo uma lista em Resultado*/
 concatSol(S1,S2,R) :-
-	S1 \= [[_]] -> (S2 \= [[_]] -> append(S1,S2,R) ; R = S1) ;
-	(S2 \= [[_]] -> R = S2 ; R = [[-1]]).
+	S1 \= [[_]] ->
+	(
+	 S2 \= [[_]] -> append(S1,S2,R) ;
+	 R = S1
+	) ;
+	(
+	 S2 \= [[_]] -> R = S2 ;
+	 R = [[-1]]
+	).
 
-valor([_,_,_,_,[CustoCaminho, Valor]],Valor).
-custoCaminho([_,_,_,_,[CustoCaminho, Valor]],CustoCaminho).
-retornaTabuleiro([Linha1, Linha2, Linha3, Linha4, [CustoCaminho, Valor]], [Linha1, Linha2, Linha3, Linha4]).
+/* valor(+Tabuleiro, -Valor) - Retorna o Valor de um Tabuleiro */
+valor([_,_,_,_,[_, Valor]],Valor).
+
+/*custoCaminho(+Tabuleiro, -Custo Do Caminho) - Retorna o Custo Do Caminho utilizado para chegar até esse Tabuleiro*/
+custoCaminho([_,_,_,_,[CustoCaminho, _]],CustoCaminho).
+
+/*retornaTabuleiro(+Tabuleiro Com Valores, -Tabuleiro) - Retorna apenas o Tabuleiro, de um Tabuleiro Com Valores*/
+retornaTabuleiro([Linha1, Linha2, Linha3, Linha4, [_, _]], [Linha1, Linha2, Linha3, Linha4]).
