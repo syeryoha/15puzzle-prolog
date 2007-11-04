@@ -14,19 +14,19 @@ compiling /var/tmp/rogervn/15puzzle-prolog/aestrela.pro for byte code...
 /var/tmp/rogervn/15puzzle-prolog/aestrela.pro:34: warning: singleton variables [CustoCaminho,Valor] for retornaTabuleiro/2
 /var/tmp/rogervn/15puzzle-prolog/aestrela.pro compiled, 34 lines read - 7504 bytes written, 21 ms
 warning: /var/tmp/rogervn/15puzzle-prolog/aestrela.pro:32: redefining procedure valor/2
-         /var/tmp/rogervn/15puzzle-prolog/quebraCabeca.pro:31: previous definition
-Stacks                size          in use            free
+ /var/tmp/rogervn/15puzzle-prolog/quebraCabeca.pro:31: previous definition
+Stacks size in use free
 
-   trail  stack       9215 Kb          499 Kb         8716 Kb
-   cstr   stack       9216 Kb            0 Kb         9216 Kb
-   global stack      24576 Kb         1711 Kb        22865 Kb
-   local  stack      12287 Kb          266 Kb        12021 Kb
+ trail stack 9215 Kb 499 Kb 8716 Kb
+ cstr stack 9216 Kb 0 Kb 9216 Kb
+ global stack 24576 Kb 1711 Kb 22865 Kb
+ local stack 12287 Kb 266 Kb 12021 Kb
 
-Times              since start      since last
+Times since start since last
 
-   user   time       0.170 sec       0.170 sec
-   system time       0.000 sec       0.000 sec
-   cpu    time       0.170 sec       0.170 sec
-   real   time       0.293 sec       0.293 sec
+ user time 0.170 sec 0.170 sec
+ system time 0.000 sec 0.000 sec
+ cpu time 0.170 sec 0.170 sec
+ real time 0.293 sec 0.293 sec
 Número de elementos na lista de nós fechados: 97
 Número de elementos na lista de nós abertos: 147
