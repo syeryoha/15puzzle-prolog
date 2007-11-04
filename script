@@ -16,6 +16,6 @@ gprolog --entry-goal "[quebraCabeca],principal(gradiente,manhattan,$i),halt" > "
 gprolog --entry-goal "[quebraCabeca],principal(aestrela,posicao,$i),halt" > "$1-aestPos-$j"
 gprolog --entry-goal "[quebraCabeca],principal(aestrela,manhattan,$i),halt" > "$1-aestMan-$j"
 gprolog --entry-goal "[quebraCabeca],principal(idaestrela,posicao,$i),halt" > "$1-idaPos-$j"
-gprolog --entry-goal "[quebraCabeca],principal(idaestrela,manhattan,$i),halt" > "$1-idaestMan-$j"
+gprolog --entry-goal "[quebraCabeca],principal(idaestrela,manhattan,$i),halt" > "$1-idaMan-$j"
 j=$(($j+3))
 done
