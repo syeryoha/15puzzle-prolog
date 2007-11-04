@@ -10,18 +10,18 @@ compiling /var/tmp/rogervn/15puzzle-prolog/heuristicaManhattan.pro for byte code
 /var/tmp/rogervn/15puzzle-prolog/heuristicaManhattan.pro compiled, 36 lines read - 4404 bytes written, 7 ms
 compiling /var/tmp/rogervn/15puzzle-prolog/gradiente.pro for byte code...
 /var/tmp/rogervn/15puzzle-prolog/gradiente.pro compiled, 13 lines read - 4620 bytes written, 7 ms
-Stacks                size          in use            free
+Stacks size in use free
 
-   trail  stack       9215 Kb         7339 Kb         1876 Kb
-   cstr   stack       9216 Kb            0 Kb         9216 Kb
-   global stack      24576 Kb        16993 Kb         7583 Kb
-   local  stack      12287 Kb          972 Kb        11315 Kb
+ trail stack 9215 Kb 7339 Kb 1876 Kb
+ cstr stack 9216 Kb 0 Kb 9216 Kb
+ global stack 24576 Kb 16993 Kb 7583 Kb
+ local stack 12287 Kb 972 Kb 11315 Kb
 
-Times              since start      since last
+Times since start since last
 
-   user   time       2.060 sec       2.060 sec
-   system time       0.020 sec       0.020 sec
-   cpu    time       2.080 sec       2.080 sec
-   real   time       2.173 sec       2.173 sec
+ user time 2.060 sec 2.060 sec
+ system time 0.020 sec 0.020 sec
+ cpu time 2.080 sec 2.080 sec
+ real time 2.173 sec 2.173 sec
 Número de elementos na lista de nós fechados: 263
 Número de elementos na lista de nós abertos: 266

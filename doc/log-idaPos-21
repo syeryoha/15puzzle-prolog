@@ -18,4 +18,4 @@ compiling /var/tmp/rogervn/15puzzle-prolog/idaestrela.pro for byte code...
 /var/tmp/rogervn/15puzzle-prolog/idaestrela.pro:138: warning: singleton variables [CustoCaminho,Valor] for retornaTabuleiro/2
 /var/tmp/rogervn/15puzzle-prolog/idaestrela.pro compiled, 138 lines read - 17616 bytes written, 15 ms
 warning: /var/tmp/rogervn/15puzzle-prolog/idaestrela.pro:136: redefining procedure valor/2
-         /var/tmp/rogervn/15puzzle-prolog/quebraCabeca.pro:31: previous definition
+ /var/tmp/rogervn/15puzzle-prolog/quebraCabeca.pro:31: previous definition

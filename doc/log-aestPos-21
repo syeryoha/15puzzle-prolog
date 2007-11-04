@@ -16,4 +16,4 @@ compiling /var/tmp/rogervn/15puzzle-prolog/aestrela.pro for byte code...
 /var/tmp/rogervn/15puzzle-prolog/aestrela.pro:34: warning: singleton variables [CustoCaminho,Valor] for retornaTabuleiro/2
 /var/tmp/rogervn/15puzzle-prolog/aestrela.pro compiled, 34 lines read - 7504 bytes written, 12 ms
 warning: /var/tmp/rogervn/15puzzle-prolog/aestrela.pro:32: redefining procedure valor/2
-         /var/tmp/rogervn/15puzzle-prolog/quebraCabeca.pro:31: previous definition
+ /var/tmp/rogervn/15puzzle-prolog/quebraCabeca.pro:31: previous definition

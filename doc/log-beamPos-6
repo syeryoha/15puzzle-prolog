@@ -10,18 +10,18 @@ compiling /var/tmp/rogervn/15puzzle-prolog/heuristicaPosicao.pro for byte code..
 /var/tmp/rogervn/15puzzle-prolog/heuristicaPosicao.pro compiled, 22 lines read - 3576 bytes written, 8 ms
 compiling /var/tmp/rogervn/15puzzle-prolog/beam.pro for byte code...
 /var/tmp/rogervn/15puzzle-prolog/beam.pro compiled, 18 lines read - 5750 bytes written, 9 ms
-Stacks                size          in use            free
+Stacks size in use free
 
-   trail  stack       9215 Kb            1 Kb         9214 Kb
-   cstr   stack       9216 Kb            0 Kb         9216 Kb
-   global stack      24576 Kb           19 Kb        24557 Kb
-   local  stack      12287 Kb            8 Kb        12279 Kb
+ trail stack 9215 Kb 1 Kb 9214 Kb
+ cstr stack 9216 Kb 0 Kb 9216 Kb
+ global stack 24576 Kb 19 Kb 24557 Kb
+ local stack 12287 Kb 8 Kb 12279 Kb
 
-Times              since start      since last
+Times since start since last
 
-   user   time       0.010 sec       0.010 sec
-   system time       0.010 sec       0.010 sec
-   cpu    time       0.020 sec       0.020 sec
-   real   time       0.120 sec       0.120 sec
+ user time 0.010 sec 0.010 sec
+ system time 0.010 sec 0.010 sec
+ cpu time 0.020 sec 0.020 sec
+ real time 0.120 sec 0.120 sec
 Número de elementos na lista de nós fechados: 8
 Número de elementos na lista de nós abertos: 7
