@@ -3,19 +3,19 @@
 j=0
 for i in '[[1,2,3,4],[5,6,7,8],[9,10,11,0],[13,14,15,12]]' '[[1,2,3,4],[5,6,0,8],[9,10,7,11],[13,14,15,12]]' '[[1,2,3,4],[5,6,7,8],[9,10,12,15],[13,0,14,11]]' '[[1,2,3,4],[5,7,0,8],[13,6,10,11],[14,9,15,12]]' '[[2,7,6,4],[1,0,3,8],[5,9,10,11],[13,14,15,12]]' '[[1,2,3,0],[5,6,7,4],[14,10,12,8],[9,13,11,15]]' '[[3,5,7,4],[1,0,10,8],[9,2,6,12],[13,14,11,15]]' '[[2,3,4,12],[1,6,7,8],[5,0,14,15],[9,10,13,11]]'; do
 
-gprolog --entry-goal "[quebraCabeca],principal(profundidade,posicao,$i),halt" > "$1-profPos-$j"
-gprolog --entry-goal "[quebraCabeca],principal(profundidade,manhattan,$i),halt" > "$1-profMan-$j"
-gprolog --entry-goal "[quebraCabeca],principal(largura,posicao,$i),halt" > "$1-largPos-$j"
-gprolog --entry-goal "[quebraCabeca],principal(largura,manhattan,$i),halt" > "$1-largMan-$j"
-gprolog --entry-goal "[quebraCabeca],principal(escalada,posicao,$i),halt" > "$1-escPos-$j"
-gprolog --entry-goal "[quebraCabeca],principal(escalada,manhattan,$i),halt" > "$1-escfMan-$j"
-gprolog --entry-goal "[quebraCabeca],principal(beam,posicao,$i),halt" > "$1-beamPos-$j"
-gprolog --entry-goal "[quebraCabeca],principal(beam,manhattan,$i),halt" > "$1-beamMan-$j"
-gprolog --entry-goal "[quebraCabeca],principal(gradiente,posicao,$i),halt" > "$1-gradPos-$j"
-gprolog --entry-goal "[quebraCabeca],principal(gradiente,manhattan,$i),halt" > "$1-gradMan-$j"
-gprolog --entry-goal "[quebraCabeca],principal(aestrela,posicao,$i),halt" > "$1-aestPos-$j"
-gprolog --entry-goal "[quebraCabeca],principal(aestrela,manhattan,$i),halt" > "$1-aestMan-$j"
-gprolog --entry-goal "[quebraCabeca],principal(idaestrela,posicao,$i),halt" > "$1-idaPos-$j"
-gprolog --entry-goal "[quebraCabeca],principal(idaestrela,manhattan,$i),halt" > "$1-idaMan-$j"
+gprolog --entry-goal "[quebraCabeca],principal(profundidade,posicao,$i),halt" &> "$1-profPos-$j"
+gprolog --entry-goal "[quebraCabeca],principal(profundidade,manhattan,$i),halt" &> "$1-profMan-$j"
+gprolog --entry-goal "[quebraCabeca],principal(largura,posicao,$i),halt" &> "$1-largPos-$j"
+gprolog --entry-goal "[quebraCabeca],principal(largura,manhattan,$i),halt" &> "$1-largMan-$j"
+gprolog --entry-goal "[quebraCabeca],principal(escalada,posicao,$i),halt" &> "$1-escPos-$j"
+gprolog --entry-goal "[quebraCabeca],principal(escalada,manhattan,$i),halt" &> "$1-escfMan-$j"
+gprolog --entry-goal "[quebraCabeca],principal(beam,posicao,$i),halt" &> "$1-beamPos-$j"
+gprolog --entry-goal "[quebraCabeca],principal(beam,manhattan,$i),halt" &> "$1-beamMan-$j"
+gprolog --entry-goal "[quebraCabeca],principal(gradiente,posicao,$i),halt" &> "$1-gradPos-$j"
+gprolog --entry-goal "[quebraCabeca],principal(gradiente,manhattan,$i),halt" &> "$1-gradMan-$j"
+gprolog --entry-goal "[quebraCabeca],principal(aestrela,posicao,$i),halt" &> "$1-aestPos-$j"
+gprolog --entry-goal "[quebraCabeca],principal(aestrela,manhattan,$i),halt" &> "$1-aestMan-$j"
+gprolog --entry-goal "[quebraCabeca],principal(idaestrela,posicao,$i),halt" &> "$1-idaPos-$j"
+gprolog --entry-goal "[quebraCabeca],principal(idaestrela,manhattan,$i),halt" &> "$1-idaMan-$j"
 j=$(($j+3))
 done
