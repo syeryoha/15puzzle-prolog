@@ -7,6 +7,13 @@ pesoConexoes2(5).
 pesoConexoes3(100).
 
 heuristica(Tabuleiro, Peca, Valor) :-
+	heuristica2(Tabuleiro, Peca, ValorMeu),
+	invertePeca(Peca, OutraPeca),
+	heuristica2(Tabuleiro, OutraPeca, ValorAdversario),
+	Valor is ValorMeu - ValorAdversario.
+	
+	
+heuristica2(Tabuleiro, Peca, Valor) :-
 	avaliaCentral(Tabuleiro, Peca, Valor0),
 	avaliaConexoes(Tabuleiro, Peca, Valor1),
 	Valor is Valor0 + Valor1.
