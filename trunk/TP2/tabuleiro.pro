@@ -36,3 +36,41 @@ atribuiZ(J,[H|T],[X,Y,Z],[H|T2]) :-
 	Z \== 0, Z1 is Z - 1,
 	atribuiZ(J,T,[X,Y,Z1],T2).
 
+imprimeTabuleiro([D1, D2, D3, D4]) :-
+	write('== Dimensão 1 =='), nl,
+	imprimeDimensao(D1),
+	write('== Dimensão 2 == '), nl,
+	imprimeDimensao(D2),
+	write('== Dimensão 3 == '), nl,
+	imprimeDimensao(D3),
+	write('== Dimensão 4 == '), nl,
+	imprimeDimensao(D4).
+
+
+imprimeDimensao([Linha1, Linha2, Linha3, Linha4]) :-
+	write(' ---------------'),nl,
+	write('|'),imprimeLinha(Linha1),nl,
+	write(' ---------------'),nl,
+	write('|'),imprimeLinha(Linha2),nl,
+	write(' ---------------'),nl,
+	write('|'),imprimeLinha(Linha3),nl,
+	write(' ---------------'),nl,
+	write('|'),imprimeLinha(Linha4),nl,
+	write(' ---------------'),nl.
+
+imprimeLinha([]).
+imprimeLinha([0|L]) :-
+	write('   |'),
+	imprimeLinha(L).
+imprimeLinha([1|L]) :-
+	write(' X |'),
+	imprimeLinha(L).
+imprimeLinha([-1|L]) :-
+	write(' O |'),
+	imprimeLinha(L).
+
+inverterPeca(1, -1).
+inverterPeca(-1, 1).
+
+nomePeca(1, 'Cruz').
+nomePeca(-1, 'Bola').
