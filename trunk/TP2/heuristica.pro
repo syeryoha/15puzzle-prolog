@@ -8,7 +8,7 @@ pesoConexoes3(100).
 
 heuristica(Tabuleiro, Peca, Valor) :-
 	heuristica2(Tabuleiro, Peca, ValorMeu),
-	invertePeca(Peca, OutraPeca),
+	inverterPeca(Peca, OutraPeca),
 	heuristica2(Tabuleiro, OutraPeca, ValorAdversario),
 	Valor is ValorMeu - ValorAdversario.
 	
