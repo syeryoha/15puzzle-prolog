@@ -26,6 +26,6 @@ maxAvaliaSucessores([T|Tabuleiros], Peca, Profundidade, Alpha, NovoAlpha, Beta, 
 	 );
 	 (
 	  NovoValor is PossivelNovoValor,
-	  NovoAlpha is PossivelNovoAlpha
+	  NovoAlpha is Alpha %**VERIFICAR!
 	 )
 	).
