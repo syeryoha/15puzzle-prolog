@@ -1,16 +1,20 @@
+infinitoPos(1000).
+infinitoNeg(-1000).
+pMax(2).
+
 jogar(Tabuleiro, Peca, [X, Y, Z]) :-
 	infinitoPos(InfP),
 	infinitoNeg(InfN),
 	jogaMax(Tabuleiro, InfN, InfP, 0).
 
 jogaMax(Tabuleiro, Peca, Alpha, Beta, Profundidade, Valor) :-
-	pMax(PMax),
+	pMax(PMax),cruz(Cruz),bola(Bola),infinitoPos(InfP),infinitoNeg(InfN),
 	(
 	 Profundidade >= PMax ->
 	 heuristica(Tabuleiro, Peca, Valor)
 	);
-	jogadas(Tabuleiro, Tabuleiros),
-	infinitoNeg(InfN),
+	( (Peca==Cruz,ganhou(Bola,Tabuleiro)) -> Valor=InfN );
+	jogadas(Peca,Tabuleiro, Tabuleiros),
 	Profundidade1 is Profundidade + 1,
 	maxAvaliaSucessores(Tabuleiros, Peca, Profundidade1, Alpha, NovoAlpha, Beta, InfN, Valor).	
 
@@ -31,13 +35,14 @@ maxAvaliaSucessores([T|Tabuleiros], Peca, Profundidade, Alpha, NovoAlpha, Beta, 
 	).
 
 jogaMin(Tabuleiro, Peca, Alpha, Beta, Profundidade, Valor) :-
-	pMax(PMax),
+	pMax(PMax),cruz(Cruz),bola(Bola),infinitoPos(InfP),infinitoNeg(InfN),
 	(
 	 Profundidade >= PMax ->
 	 heuristica(Tabuleiro, Peca, Valor)
 	);
-	jogadas(Tabuleiro, Tabuleiros),
-	infinitoPos(InfP),
+	( ganhou(Peca,Tabuleiro) -> Valor=InfP );
+	( Peca == Cruz -> Inimigo = Bola ; Inimigo == Cruz ),
+	jogadas(Inimigo,Tabuleiro, Tabuleiros),
 	Profundidade1 is Profundidade + 1,
 	minAvaliaSucessores(Tabuleiros, Peca, Profundidade1, Alpha, NovoAlpha, InfP, Alpha, Valor).	
 
