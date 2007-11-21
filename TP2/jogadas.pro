@@ -1,4 +1,4 @@
-jogar(Peca,Original,Jogado) :-
+jogar(Peca,Original,[[X,Y,Z],Jogado]) :-
 	member(Z,[0,1,2,3]), member(Y,[0,1,2,3]), member(X,[0,1,2,3]),
 	atribuirCasa(Peca,Original,[X,Y,Z],Jogado).
 

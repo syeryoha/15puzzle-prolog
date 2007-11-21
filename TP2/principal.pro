@@ -1,6 +1,7 @@
 :- include(heuristica).
 :- include(jogadas).
 :- include(tabuleiro).
+:- include(minMax).
 
 principal :-
 	tabuleiroVazio(X),
