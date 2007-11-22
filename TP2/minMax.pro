@@ -1,5 +1,5 @@
-infinitoPos(1000).
-infinitoNeg(-1000).
+infinitoPos(100000000).
+infinitoNeg(-100000000).
 pMax(2).
 
 joga(Tabuleiro, Peca, Valor,Jogada) :-
