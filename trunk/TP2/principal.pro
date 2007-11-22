@@ -9,9 +9,11 @@ repete :- repete.
 
 :- dynamic(tabuleiroAtual/1).
 :- dynamic(jogadorAtual/1).
+:- dynamic(computador/1).
 
 tabuleiroAtual(X) :- tabuleiroVazio(X).
 jogadorAtual(X) :- cruz(X).
+computador(1).
 
 
 principal :-
@@ -25,13 +27,27 @@ principal :-
 	heuristica(Tabuleiro, B, ValorB),
 	write('Valor Cruz: '), write(ValorC), nl,
 	write('Valor Bola: '), write(ValorB), nl,
-	write('Linha [0-3]: '),
-	read(Linha), nl,
-	write('Coluna [0-3]: '),
-	read(Coluna), nl,
-	write('Dimensão [0-3]: '),
-	read(Dimensao), nl,
 	(
+	 computador(1) ->
+	 (
+	  joga(Tabuleiro, Peca, Valor, [[Coluna, Linha, Dimensao],_])
+	 );
+	 (
+	  write('Linha [0-3]: '),
+	  read(Linha), nl,
+	  write('Coluna [0-3]: '),
+	  read(Coluna), nl,
+	  write('Dimensão [0-3]: '),
+	  read(Dimensao), nl
+	  )
+	),
+	(
+	 write('Jogada: '),nl,
+	 write(Coluna),
+	 write(', '),
+	 write(Linha),
+	 write(', '),
+	 write(Dimensao),
 	 atribuirCasa(Peca, Tabuleiro, [Coluna, Linha, Dimensao], TabJogado) ->	%** Por que linha e coluna ficaram invertidas?
 	 (
 	  (
@@ -41,7 +57,7 @@ principal :-
 	    nomePeca(Peca, Nome),
 	    write(Nome),
 	    write(' '),
-	    write('Ganhou!'),nl
+	    write('Ganhou!'),nl,!
 	   )
 	  );
 	  (
@@ -50,13 +66,25 @@ principal :-
 	   retractall(jogadorAtual(_)),
 	   asserta(tabuleiroAtual(TabJogado)),
 	   asserta(jogadorAtual(OutraPeca)),
+	   (
+	    computador(1) ->
+	    (
+	     retractall(computador(_)),
+	     asserta(computador(0))
+	    );
+	    (
+	     retractall(computador(_)),
+	     asserta(computador(1))
+	    )
+	   ),
 	   fail
-	   %principal(TabJogado, OutraPeca)
+	    %principal(TabJogado, OutraPeca)
 	  )
 	 );
 	 (
 	  write('Jogada inválida. Por favor, jogue novamente'), nl,
-	  principal(Tabuleiro, Peca)
+          fail
+	  %principal(Tabuleiro, Peca)
 	 )
 	).
 
