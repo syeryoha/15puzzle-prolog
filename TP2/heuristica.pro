@@ -70,7 +70,9 @@ avaliaConexoes(Tabuleiro, Peca, Valor, N) :-
 	avaliaDiagonal(Tabuleiro, Peca, Valor2, N),
 	avaliaProfundidade(Tabuleiro, Peca, Valor3, N),
 	avaliaDiagonal3D(Tabuleiro, Peca, Valor4, N),
-	Valor is Valor0 + Valor1 + Valor2 + Valor3 + Valor4.
+	avaliaHorizontal3D(Tabuleiro, Peca, Valor5, N),
+	avaliaVertical3D(Tabuleiro, Peca, Valor6, N),
+	Valor is Valor0 + Valor1 + Valor2 + Valor3 + Valor4 + Valor5 + Valor6.
 
 expEspecial(Base, 0, 0) :- !.
 
@@ -211,6 +213,93 @@ avaliaProfundidade3(Tabuleiro, Peca, Valor, N, [X, Y]) :-
 	    Valor is 0
 	).
 
+avaliaHorizontal3D(Tabuleiro, Peca, Valor, N) :-
+	avaliaHorizontal3D2(Tabuleiro, Peca, Valor0, N, 0),
+	avaliaHorizontal3D2(Tabuleiro, Peca, Valor1, N, 1),
+	avaliaHorizontal3D2(Tabuleiro, Peca, Valor2, N, 2),
+	avaliaHorizontal3D2(Tabuleiro, Peca, Valor3, N, 3),
+	avaliaHorizontal3D3(Tabuleiro, Peca, Valor4, N, 4),
+	avaliaHorizontal3D3(Tabuleiro, Peca, Valor5, N, 5),
+	avaliaHorizontal3D3(Tabuleiro, Peca, Valor6, N, 6),
+	avaliaHorizontal3D3(Tabuleiro, Peca, Valor7, N, 7),
+	Valor is Valor0 + Valor1 + Valor2 + Valor3 + Valor4 + Valor5 + Valor6 + Valor7.
+
+avaliaHorizontal3D2(Tabuleiro, Peca, Valor, N, X) :-
+	obterCasa(Tabuleiro, [X, 0, 0], Peca0),
+	obterCasa(Tabuleiro, [X, 1, 1], Peca1),
+	obterCasa(Tabuleiro, [X, 2, 2], Peca2),
+	obterCasa(Tabuleiro, [X, 3, 3], Peca3),
+	nPeca(Peca, [Peca0, Peca1, Peca2, Peca3], Num),
+	(
+	    somente(Peca, [Peca0, Peca1, Peca2, Peca3]) ->
+	    (
+		Num =:= N ->
+		Valor is 1;
+		Valor is 0
+	    );
+	    Valor is 0
+	).
+
+avaliaHorizontal3D3(Tabuleiro, Peca, Valor, N, X) :-
+	obterCasa(Tabuleiro, [X, 0, 3], Peca0),
+	obterCasa(Tabuleiro, [X, 1, 2], Peca1),
+	obterCasa(Tabuleiro, [X, 2, 1], Peca2),
+	obterCasa(Tabuleiro, [X, 3, 0], Peca3),
+	nPeca(Peca, [Peca0, Peca1, Peca2, Peca3], Num),
+	(
+	    somente(Peca, [Peca0, Peca1, Peca2, Peca3]) ->
+	    (
+		Num =:= N ->
+		Valor is 1;
+		Valor is 0
+	    );
+	    Valor is 0
+	).
+
+avaliaVertical3D(Tabuleiro, Peca, Valor, N) :-
+	avaliaVertical3D2(Tabuleiro, Peca, Valor0, N, 0),
+	avaliaVertical3D2(Tabuleiro, Peca, Valor1, N, 1),
+	avaliaVertical3D2(Tabuleiro, Peca, Valor2, N, 2),
+	avaliaVertical3D2(Tabuleiro, Peca, Valor3, N, 3),
+	avaliaVertical3D3(Tabuleiro, Peca, Valor4, N, 4),
+	avaliaVertical3D3(Tabuleiro, Peca, Valor5, N, 5),
+	avaliaVertical3D3(Tabuleiro, Peca, Valor6, N, 6),
+	avaliaVertical3D3(Tabuleiro, Peca, Valor7, N, 7),
+	Valor is Valor0 + Valor1 + Valor2 + Valor3 + Valor4 + Valor5 + Valor6 + Valor7.
+
+avaliaVertical3D2(Tabuleiro, Peca, Valor, N, Y) :-
+	obterCasa(Tabuleiro, [0, Y, 0], Peca0),
+	obterCasa(Tabuleiro, [1, Y, 1], Peca1),
+	obterCasa(Tabuleiro, [2, Y, 2], Peca2),
+	obterCasa(Tabuleiro, [3, Y, 3], Peca3),
+	nPeca(Peca, [Peca0, Peca1, Peca2, Peca3], Num),
+	(
+	    somente(Peca, [Peca0, Peca1, Peca2, Peca3]) ->
+	    (
+		Num =:= N ->
+		Valor is 1;
+		Valor is 0
+	    );
+	    Valor is 0
+	).
+
+avaliaVertical3D3(Tabuleiro, Peca, Valor, N, Y) :-
+	obterCasa(Tabuleiro, [0, Y, 3], Peca0),
+	obterCasa(Tabuleiro, [1, Y, 2], Peca1),
+	obterCasa(Tabuleiro, [2, Y, 1], Peca2),
+	obterCasa(Tabuleiro, [3, Y, 0], Peca3),
+	nPeca(Peca, [Peca0, Peca1, Peca2, Peca3], Num),
+	(
+	    somente(Peca, [Peca0, Peca1, Peca2, Peca3]) ->
+	    (
+		Num =:= N ->
+		Valor is 1;
+		Valor is 0
+	    );
+	    Valor is 0
+	).
+
+	
 avaliaDiagonal3D(Tabuleiro, Peca, Valor, N) :-
 	avaliaDiagonal3D2(Tabuleiro, Peca, Valor0, N, 0),
 	avaliaDiagonal3D2(Tabuleiro, Peca, Valor1, N, 1),
