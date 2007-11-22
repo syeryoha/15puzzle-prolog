@@ -3,12 +3,21 @@
 :- include(tabuleiro).
 :- include(minMax).
 
-principal :-
-	tabuleiroVazio(X),
-	cruz(C),
-	principal(X, C).
 
-principal(Tabuleiro, Peca) :-
+repete.
+repete :- repete.
+
+:- dynamic(tabuleiroAtual/1).
+:- dynamic(jogadorAtual/1).
+
+tabuleiroAtual(X) :- tabuleiroVazio(X).
+jogadorAtual(X) :- cruz(X).
+
+
+principal :-
+	repete,
+	tabuleiroAtual(Tabuleiro),
+	jogadorAtual(Peca),
 	imprimeTabuleiro(Tabuleiro),	
 	cruz(C),
 	bola(B),
@@ -37,7 +46,12 @@ principal(Tabuleiro, Peca) :-
 	  );
 	  (
 	   inverterPeca(Peca, OutraPeca),
-	   principal(TabJogado, OutraPeca)
+	   retractall(tabuleiroAtual(_)),
+	   retractall(jogadorAtual(_)),
+	   asserta(tabuleiroAtual(TabJogado)),
+	   asserta(jogadorAtual(OutraPeca)),
+	   fail
+	   %principal(TabJogado, OutraPeca)
 	  )
 	 );
 	 (
