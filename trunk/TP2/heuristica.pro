@@ -218,10 +218,10 @@ avaliaHorizontal3D(Tabuleiro, Peca, Valor, N) :-
 	avaliaHorizontal3D2(Tabuleiro, Peca, Valor1, N, 1),
 	avaliaHorizontal3D2(Tabuleiro, Peca, Valor2, N, 2),
 	avaliaHorizontal3D2(Tabuleiro, Peca, Valor3, N, 3),
-	avaliaHorizontal3D3(Tabuleiro, Peca, Valor4, N, 4),
-	avaliaHorizontal3D3(Tabuleiro, Peca, Valor5, N, 5),
-	avaliaHorizontal3D3(Tabuleiro, Peca, Valor6, N, 6),
-	avaliaHorizontal3D3(Tabuleiro, Peca, Valor7, N, 7),
+	avaliaHorizontal3D3(Tabuleiro, Peca, Valor4, N, 0),
+	avaliaHorizontal3D3(Tabuleiro, Peca, Valor5, N, 1),
+	avaliaHorizontal3D3(Tabuleiro, Peca, Valor6, N, 2),
+	avaliaHorizontal3D3(Tabuleiro, Peca, Valor7, N, 3),
 	Valor is Valor0 + Valor1 + Valor2 + Valor3 + Valor4 + Valor5 + Valor6 + Valor7.
 
 avaliaHorizontal3D2(Tabuleiro, Peca, Valor, N, X) :-
@@ -261,10 +261,10 @@ avaliaVertical3D(Tabuleiro, Peca, Valor, N) :-
 	avaliaVertical3D2(Tabuleiro, Peca, Valor1, N, 1),
 	avaliaVertical3D2(Tabuleiro, Peca, Valor2, N, 2),
 	avaliaVertical3D2(Tabuleiro, Peca, Valor3, N, 3),
-	avaliaVertical3D3(Tabuleiro, Peca, Valor4, N, 4),
-	avaliaVertical3D3(Tabuleiro, Peca, Valor5, N, 5),
-	avaliaVertical3D3(Tabuleiro, Peca, Valor6, N, 6),
-	avaliaVertical3D3(Tabuleiro, Peca, Valor7, N, 7),
+	avaliaVertical3D3(Tabuleiro, Peca, Valor4, N, 0),
+	avaliaVertical3D3(Tabuleiro, Peca, Valor5, N, 1),
+	avaliaVertical3D3(Tabuleiro, Peca, Valor6, N, 2),
+	avaliaVertical3D3(Tabuleiro, Peca, Valor7, N, 3),
 	Valor is Valor0 + Valor1 + Valor2 + Valor3 + Valor4 + Valor5 + Valor6 + Valor7.
 
 avaliaVertical3D2(Tabuleiro, Peca, Valor, N, Y) :-
