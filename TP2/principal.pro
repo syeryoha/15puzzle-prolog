@@ -12,9 +12,8 @@ principal(Tabuleiro, Peca) :-
 	imprimeTabuleiro(Tabuleiro),	
 	cruz(C),
 	bola(B),
-/*	heuristica(Tabuleiro, C, ValorC),
-	heuristica(Tabuleiro, B, ValorB),*/
-	ValorC=0,ValorB=0,
+	heuristica(Tabuleiro, C, ValorC),
+	heuristica(Tabuleiro, B, ValorB),
 	write('Valor Cruz: '), write(ValorC), nl,
 	write('Valor Bola: '), write(ValorB), nl,
 	write('Linha [0-3]: '),
