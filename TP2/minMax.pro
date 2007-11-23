@@ -5,7 +5,7 @@ pMax(2).
 joga(Tabuleiro, Peca, Valor,Jogada) :-
 	infinitoPos(InfP),
 	infinitoNeg(InfN),
-	jogaMax([[],Tabuleiro], Peca, InfN, InfP, 0,Valor, Jogada).
+	jogaMax([[],Tabuleiro], Peca, InfP, InfN, 0,Valor, Jogada).
 
 jogaMax(TabuleiroJogado, Peca, Alpha, Beta, Profundidade, Valor, Jogada) :-
 	TabuleiroJogado = [_,Tabuleiro],
@@ -28,7 +28,8 @@ maxAvaliaSucessores([], Peca, Profundidade, NovoAlpha, NovoAlpha, Beta, NovoValo
 maxAvaliaSucessores([T|Tabuleiros], Peca, Profundidade, Alpha, NovoAlpha, Beta, Valor, NovoValor, Jogada, NovoJogada) :-
 	jogaMin(T, Peca, Alpha, Beta, Profundidade, ValorMin),
 	max(Valor, ValorMin, PossivelNovoValor),
-	( PossivelNovoValor =:= ValorMin -> PossivelNovaJogada = T ; PossivelNovaJogada = Jogada ),
+	T = [_,Tabuleiro],
+	( (PossivelNovoValor =:= ValorMin) -> PossivelNovaJogada = T ; PossivelNovaJogada = Jogada ),
 	(
 	 PossivelNovoValor < Beta ->
 	 (
@@ -36,6 +37,7 @@ maxAvaliaSucessores([T|Tabuleiros], Peca, Profundidade, Alpha, NovoAlpha, Beta, 
 	  maxAvaliaSucessores(Tabuleiros, Peca, Profundidade, PossivelNovoAlpha, NovoAlpha, Beta, PossivelNovoValor, NovoValor, PossivelNovaJogada, NovoJogada) 
 	 );
 	 (
+	  (ganhou(Peca,Tabuleiro) ; PossivelNovoValor \== InfN) -> NovoJogada = T; % MUDARRRR
 	  NovoValor is PossivelNovoValor,
 	  NovoAlpha is Alpha %**VERIFICAR!
 	 )
