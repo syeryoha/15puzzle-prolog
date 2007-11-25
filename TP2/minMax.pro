@@ -1,13 +1,11 @@
-infinitoPos(100000000).
-infinitoNeg(-100000000).
 pMax(2).
 
 joga(Tabuleiro, Peca, Valor,Jogada) :-
-	infinitoPos(InfP),
-	infinitoNeg(InfN),
-	jogaMax([[],Tabuleiro], Peca, InfP, InfN, 0,Valor, Jogada).
+	infinitoPos(Beta),
+	infinitoNeg(Alpha),
+	jogaMax([[],Tabuleiro], Peca, 0,Valor, Jogada, Alpha, Beta).
 
-jogaMax(TabuleiroJogado, Peca, Alpha, Beta, Profundidade, Valor, Jogada) :-
+jogaMax(TabuleiroJogado, Peca, Profundidade, Valor, Jogada, Alpha, Beta) :-
 	TabuleiroJogado = [_,Tabuleiro],
 	pMax(PMax),cruz(Cruz),bola(Bola),infinitoPos(InfP),infinitoNeg(InfN),inverterPeca(Peca,Inimigo),
 	(
@@ -19,31 +17,30 @@ jogaMax(TabuleiroJogado, Peca, Alpha, Beta, Profundidade, Valor, Jogada) :-
 	  Profundidade >= PMax ->  heuristica(Tabuleiro, Peca, Valor) ;
 	  ( jogadas(Peca,Tabuleiro, Tabuleiros),
 	    Profundidade1 is Profundidade + 1,
-	    maxAvaliaSucessores(Tabuleiros, Peca, Profundidade1, Alpha, NovoAlpha, Beta, InfN, Valor, [], Jogada)
+	    maxAvaliaSucessores(Tabuleiros, Peca, Profundidade1, InfN, Valor, [], Jogada, Alpha, Beta)
 	  )
 	 )
 	).
 
-maxAvaliaSucessores([], Peca, Profundidade, NovoAlpha, NovoAlpha, Beta, NovoValor, NovoValor, NovoJogada, NovoJogada).
-maxAvaliaSucessores([T|Tabuleiros], Peca, Profundidade, Alpha, NovoAlpha, Beta, Valor, NovoValor, Jogada, NovoJogada) :-
-	jogaMin(T, Peca, Alpha, Beta, Profundidade, ValorMin),
+maxAvaliaSucessores([], Peca, Profundidade, NovoValor, NovoValor, NovoJogada, NovoJogada, Alpha, Beta).
+maxAvaliaSucessores([T|Tabuleiros], Peca, Profundidade, Valor, NovoValor, Jogada, NovoJogada, Alpha, Beta) :-
+	jogaMin(T, Peca, Profundidade, ValorMin, Alpha, Beta),
 	max(Valor, ValorMin, PossivelNovoValor),
 	T = [_,Tabuleiro],
 	( (PossivelNovoValor =:= ValorMin) -> PossivelNovaJogada = T ; PossivelNovaJogada = Jogada ),
-	(
-	 PossivelNovoValor < Beta ->
-	 (
-	  max(Alpha, PossivelNovoValor, PossivelNovoAlpha),
-	  maxAvaliaSucessores(Tabuleiros, Peca, Profundidade, PossivelNovoAlpha, NovoAlpha, Beta, PossivelNovoValor, NovoValor, PossivelNovaJogada, NovoJogada) 
-	 );
-	 (
-	  (ganhou(Peca,Tabuleiro) ; PossivelNovoValor \== InfN) -> NovoJogada = T; % MUDARRRR
-	  NovoValor is PossivelNovoValor,
-	  NovoAlpha is Alpha %**VERIFICAR!
-	 )
-	).
+        (
+          PossivelNovoValor >= Beta  -> 
+          (
+            NovoValor=PossivelNovoValor,
+            NovoJogada=PossivelNovaJogada
+           );
+          (
+          max(Alpha, PossivelNovoValor, NovoAlpha),
+          maxAvaliaSucessores(Tabuleiros, Peca, Profundidade, PossivelNovoValor, NovoValor, PossivelNovaJogada, NovoJogada, NovoAlpha, Beta)
+          )
+        ).
 
-jogaMin(TabuleiroJogado, Peca, Alpha, Beta, Profundidade, Valor) :-
+jogaMin(TabuleiroJogado, Peca, Profundidade, Valor, Alpha, Beta) :-
 	TabuleiroJogado = [_,Tabuleiro],
 	pMax(PMax),infinitoPos(InfP),infinitoNeg(InfN),inverterPeca(Peca,Inimigo),
 	(
@@ -55,25 +52,24 @@ jogaMin(TabuleiroJogado, Peca, Alpha, Beta, Profundidade, Valor) :-
 	  Profundidade >= PMax -> heuristica(Tabuleiro, Peca, Valor) ;
 	  ( jogadas(Inimigo,Tabuleiro, Tabuleiros),
 	    Profundidade1 is Profundidade + 1,
-	    minAvaliaSucessores(Tabuleiros, Peca, Profundidade1, Alpha, NovoAlpha, InfP, Alpha, Valor,_,_)
+	    minAvaliaSucessores(Tabuleiros, Peca, Profundidade1, InfP, Valor, Alpha, Beta)
 	  )
 	 )
 	).
 
-minAvaliaSucessores([], Peca, Profundidade, Alpha, PossivelNovoBeta, PossivelNovoBeta, NovoValor, NovoValor, NovoJogada, NovoJogada).
-minAvaliaSucessores([T|Tabuleiros], Peca, Profundidade, Alpha, NovoBeta, Beta, Valor, NovoValor, Jogada, NovoJogada) :-
-	jogaMax(T, Peca, Alpha, Beta, Profundidade, ValorMax, Jogada),
+minAvaliaSucessores([], Peca, Profundidade, NovoValor, NovoValor, Alpha, Beta).
+minAvaliaSucessores([T|Tabuleiros], Peca, Profundidade, Valor, NovoValor, Alpha, Beta) :-
+	jogaMax(T, Peca, Profundidade, ValorMax, _, Alpha, Beta),
 	min(Valor, ValorMax, PossivelNovoValor),
 	(
-	 PossivelNovoValor > Alpha ->
-	 (
-	  min(Beta, PossivelNovoValor, PossivelNovoBeta),
-	  minAvaliaSucessores(Tabuleiros, Peca, Profundidade, Alpha, NovoBeta, PossivelNovoBeta, PossivelNovoValor, NovoValor)
-	 );
-	 (
-	  NovoValor is PossivelNovoValor,
-	  NovoBeta is Beta %**VERIFICAR!
-	 )
+	    PossivelNovoValor =< Alpha ->
+            (
+		NovoValor=PossivelNovoValor
+            );
+	    (
+		min(Beta, PossivelNovoValor, NovoBeta),
+		minAvaliaSucessores(Tabuleiros, Peca, Profundidade, PossivelNovoValor, NovoValor, Alpha, NovoBeta)
+	    )
 	).
 
 max(X,Y,X) :- X >= Y.

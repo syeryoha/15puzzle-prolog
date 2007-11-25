@@ -11,6 +11,9 @@ repete :- repete.
 :- dynamic(jogadorAtual/1).
 :- dynamic(computador/1).
 
+infinitoPos(10000).
+infinitoNeg(-10000).
+
 tabuleiroAtual(X) :- tabuleiroVazio(X).
 jogadorAtual(X) :- cruz(X).
 computador(1).
@@ -23,14 +26,12 @@ principal :-
 	imprimeTabuleiro(Tabuleiro),	
 	cruz(C),
 	bola(B),
-	heuristica(Tabuleiro, C, ValorC),
-	heuristica(Tabuleiro, B, ValorB),
-	write('Valor Cruz: '), write(ValorC), nl,
-	write('Valor Bola: '), write(ValorB), nl,
 	(
 	 computador(1) ->
 	 (
-	  joga(Tabuleiro, Peca, Valor, [[Coluna, Linha, Dimensao],_])
+	  joga(Tabuleiro, Peca, Valor, [[Coluna, Linha, Dimensao],_]),
+          write('Valor: '),
+          write(Valor), nl
 	 );
 	 (
 	  write('Linha [0-3]: '),
