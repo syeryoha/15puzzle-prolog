@@ -2,7 +2,7 @@
 :- include(jogadas).
 :- include(tabuleiro).
 :- include(minMax).
-
+:- include(soquete).
 
 repete.
 repete :- repete.
@@ -20,6 +20,75 @@ computador(1).
 
 
 principal :-
+	write('Deseja comecar e conectar a outro jogador? [s/n]'),nl,
+	read(Resposta),
+	(
+	 (Resposta == 's'; Resposta == 'S') ->
+	  (
+	   write('Digite o servidor a se conectar:'),nl,
+	   read(Servidor),
+	   write('Digite o porto do servidor:'),nl,
+	   read(Porto),
+	   decideJogador(Peca),
+	   conecta_adversario(Servidor,Porto,Conexao),
+	   tabuleiroVazio(Vaz),joga(Vaz,Peca,_,[Jogada,Tabuleiro]),
+	   imprimeTabuleiro(Tabuleiro),
+	   Jogada = [X,Y,Z],
+	   envia_jogada(Conexao,X,Y,Z),
+	   retractall(tabuleiroAtual(_)),
+	   asserta(tabuleiroAtual(Tabuleiro)),
+	   jogo(Peca,Conexao)
+	  );
+	 ( (Resposta == 'n' ; Resposta == 'N') ->
+	  (
+	   write('Digite o porto a ser usado:'),nl,
+	   read(Porto),
+	   decideJogador(Peca),
+	   write('Esperando algum jogador se conectar...'),nl,
+	   espera_adversario(Porto,Conexao),
+	   jogo(Peca,Conexao)
+	  );
+	  write('Erro, responda s ou n.'),nl
+	 )
+	).
+
+decideJogador(Peca) :-
+	write('Digite qual jogador quer ser: [cruz/bola]'),nl,
+	read(PecaNome),
+	(PecaNome == cruz -> Peca = 1 ;
+	 (PecaNome == bola -> Peca = -1 ;
+	  write("Erro, deve-se escolher ou cruz ou bola."),nl,fail 
+	 )
+	).
+
+jogo(Peca,Conexao) :-
+%	repete,
+	tabuleiroAtual(Tab),inverterPeca(Peca,Inimigo),
+	recebe_jogada(Conexao,X,Y,Z),
+	atribuirCasa(Inimigo, Tab, [Y, X, Z], TabJogado),
+	imprimeTabuleiro(TabJogado),
+	(
+	  ganhou(Inimigo,TabJogado) -> write('Eu perdi!'),nl ;
+	  (  
+	    write('Calma, estou pensando na minha jogada...'),nl,
+	    joga(TabJogado,Peca,_,[Jogada,TabJogado2]),
+	    Jogada = [Y,X,Z],
+	    envia_jogada(Conexao,X,Y,Z),
+	    imprimeTabuleiro(TabJogado2),
+	    (
+	      ganhou(Peca,TabJogado2) -> write('Eu ganhei!',nl) ;
+	        (
+		  retractall(tabuleiroAtual(_)),
+	          asserta(tabuleiroAtual(TabJogado2)),
+%	          fail.
+                  jogo(Peca,Conexao)
+		)
+	    )
+	  )
+	).
+
+
+principalHumano :-
 	repete,
 	tabuleiroAtual(Tabuleiro),
 	jogadorAtual(Peca),
