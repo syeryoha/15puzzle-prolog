@@ -31,8 +31,8 @@ maxAvaliaSucessores([T|Tabuleiros], Peca, Profundidade, Valor, NovoValor, Jogada
         (
           PossivelNovoValor >= Beta  -> 
           (
-            NovoValor is PossivelNovoValor,
-            NovoJogada is PossivelNovaJogada
+            NovoValor=PossivelNovoValor,
+            NovoJogada=PossivelNovaJogada
            );
           (
           max(Alpha, PossivelNovoValor, NovoAlpha),
@@ -63,7 +63,9 @@ minAvaliaSucessores([T|Tabuleiros], Peca, Profundidade, Valor, NovoValor, Alpha,
 	min(Valor, ValorMax, PossivelNovoValor),
 	(
 	    PossivelNovoValor =< Alpha ->
-	    NovoValor is PossivelNovoValor;
+            (
+		NovoValor=PossivelNovoValor
+            );
 	    (
 		min(Beta, PossivelNovoValor, NovoBeta),
 		minAvaliaSucessores(Tabuleiros, Peca, Profundidade, PossivelNovoValor, NovoValor, Alpha, NovoBeta)
