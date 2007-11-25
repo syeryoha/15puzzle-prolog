@@ -6,16 +6,26 @@ pesoCentral3(5).
 pesoConexoes2(5).
 pesoConexoes3(100).
 
+:- dynamic(valorAtual/1).
+
 %heuristica(Tabuleiro, Peca, 100).
 
-heuristica(Tabuleiro, Peca, Valor) :-	
+
+heuristica(Tabuleiro,Peca,Valor) :-
+	\+ heuristicaAntiga(Tabuleiro,Peca),
+	valorAtual(Valor),
+	retractall(valorAtual(_)).
+
+heuristicaAntiga(Tabuleiro, Peca) :-	
 	heuristica2(Tabuleiro, Peca, ValorMeu),
 	inverterPeca(Peca, OutraPeca),
 	heuristica2(Tabuleiro, OutraPeca, ValorAdversario),
         ajusta(ValorMeu, ValorMeuAjustado),
         ajusta(ValorAdversario, ValorAdversarioAjustado),
         Valor1 is ValorMeuAjustado - ValorAdversarioAjustado,
-	ajusta(Valor1, Valor).
+	ajusta(Valor1, Valor),
+	asserta(valorAtual(Valor)),
+	fail.
 
 ajusta(Valor, ValorAjustado) :-
 	infinitoNeg(InfN),
