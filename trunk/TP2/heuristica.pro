@@ -100,7 +100,7 @@ avaliaConexoes(Tabuleiro, Peca, Valor, N) :-
 expEspecial(Base, 0, 0) :- !.
 
 expEspecial(Base, Expoente, Resultado) :-
-	Resultado is Base ** Expoente.
+	Resultado is Base * Expoente.
 
 avaliaHorizontal(Tabuleiro, Peca, Valor, N) :-
 	avaliaHorizontal2(Tabuleiro, Peca, Valor0, N, 0),
