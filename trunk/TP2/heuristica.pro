@@ -8,12 +8,23 @@ pesoConexoes3(100).
 
 %heuristica(Tabuleiro, Peca, 100).
 
-heuristica(Tabuleiro, Peca, Valor) :-
+heuristica(Tabuleiro, Peca, Valor) :-	
 	heuristica2(Tabuleiro, Peca, ValorMeu),
 	inverterPeca(Peca, OutraPeca),
 	heuristica2(Tabuleiro, OutraPeca, ValorAdversario),
-	Valor is ValorMeu - ValorAdversario.
+        ajusta(ValorMeu, ValorMeuAjustado),
+        ajusta(ValorAdversario, ValorAdversarioAjustado),
+        Valor1 is ValorMeuAjustado - ValorAdversarioAjustado,
+	ajusta(Valor1, Valor).
 
+ajusta(Valor, ValorAjustado) :-
+	infinitoNeg(InfN),
+	infinitoPos(InfP),
+	(
+	    Valor =< InfN -> ValorAjustado is InfN + 1 ;
+	    Valor >= InfP -> ValorAjustado is InfP - 1;
+	    ValorAjustado is Valor
+	).
 	
 heuristica2(Tabuleiro, Peca, Valor) :-
 	avaliaCentral(Tabuleiro, Peca, Valor0),
