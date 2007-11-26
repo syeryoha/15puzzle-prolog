@@ -62,26 +62,29 @@ decideJogador(Peca) :-
 	).
 
 jogo(Peca,Conexao) :-
-%	repete,
+	repete,
 	tabuleiroAtual(Tab),inverterPeca(Peca,Inimigo),
+	write('Esperando jogada do inimigo...'),nl,
 	recebe_jogada(Conexao,X,Y,Z),
 	atribuirCasa(Inimigo, Tab, [Y, X, Z], TabJogado),
 	imprimeTabuleiro(TabJogado),
 	(
 	  ganhou(Inimigo,TabJogado) -> write('Eu perdi!'),nl ;
-	  (  
+	  ( 
+	    write('Vou jogar agora, ok? Pressione enter para continuar.'),nl,
+	    get_char(_),
 	    write('Calma, estou pensando na minha jogada...'),nl,
 	    joga(TabJogado,Peca,_,[Jogada,TabJogado2]),
-	    Jogada = [Y,X,Z],
-	    envia_jogada(Conexao,X,Y,Z),
+	    Jogada = [Y1,X1,Z1],
+	    envia_jogada(Conexao,X1,Y1,Z1),
 	    imprimeTabuleiro(TabJogado2),
 	    (
 	      ganhou(Peca,TabJogado2) -> write('Eu ganhei!',nl) ;
 	        (
 		  retractall(tabuleiroAtual(_)),
 	          asserta(tabuleiroAtual(TabJogado2)),
-%	          fail.
-                  jogo(Peca,Conexao)
+	          fail
+%                  jogo(Peca,Conexao)
 		)
 	    )
 	  )
