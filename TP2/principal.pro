@@ -68,26 +68,28 @@ jogo(Peca,Conexao) :-
 	recebe_jogada(Conexao,X,Y,Z),
 	atribuirCasa(Inimigo, Tab, [Y, X, Z], TabJogado),
 	imprimeTabuleiro(TabJogado),
-	(
+	( (jogadas(Peca,TabJogado,Tabs),Tabs == []) -> write('Deu velha!'),nl ;
+	 (
 	  ganhou(Inimigo,TabJogado) -> write('Eu perdi!'),nl ;
 	  ( 
-	    write('Vou jogar agora, ok? Pressione enter para continuar.'),nl,
-	    get_char(_),
 	    write('Calma, estou pensando na minha jogada...'),nl,
 	    joga(TabJogado,Peca,_,[Jogada,TabJogado2]),
 	    Jogada = [Y1,X1,Z1],
 	    envia_jogada(Conexao,X1,Y1,Z1),
 	    imprimeTabuleiro(TabJogado2),
 	    (
-	      ganhou(Peca,TabJogado2) -> write('Eu ganhei!',nl) ;
+	      ganhou(Peca,TabJogado2) -> write('Eu ganhei!'),nl ;
 	        (
 		  retractall(tabuleiroAtual(_)),
 	          asserta(tabuleiroAtual(TabJogado2)),
-	          fail
-%                  jogo(Peca,Conexao)
+	          (
+		   (jogadas(Peca,TabJogado2,Tabs2),Tabs2 == []) -> write('Deu velha!'),nl 
+		  );
+		  fail
 		)
 	    )
 	  )
+	 )
 	).
 
 
@@ -98,6 +100,8 @@ principalHumano :-
 	imprimeTabuleiro(Tabuleiro),	
 	cruz(C),
 	bola(B),
+	((jogadas(Peca,Tabuleiro,Tabs),Tabs == []) -> write('Deu velha!'),nl;
+	
 	(
 	 computador(1) ->
 	 (
@@ -159,6 +163,7 @@ principalHumano :-
           fail
 	  %principal(Tabuleiro, Peca)
 	 )
+	)
 	).
 
 
