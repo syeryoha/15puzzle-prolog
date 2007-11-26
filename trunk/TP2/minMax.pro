@@ -1,9 +1,24 @@
+:- dynamic(pMax/1).
 pMax(2).
 
 joga(Tabuleiro, Peca, Valor,Jogada) :-
 	infinitoPos(Beta),
 	infinitoNeg(Alpha),
-	jogaMax([[],Tabuleiro], Peca, 0,Valor, Jogada, Alpha, Beta).
+	inverterPeca(Peca,Inimigo),
+	jogaMax([[],Tabuleiro], Peca, 0,Valor, Jogada1, Alpha, Beta),
+	(
+	 Jogada1 == [] ->
+	 (
+	   retractall(pMax(_)),
+	   asserta(pMax(1)),
+	   joga(Tabuleiro,Inimigo,_,[JogIn,_]),
+	   atribuirCasa(Peca,Tabuleiro,JogIn,TabIn),
+	   Jogada = [JogIn,TabIn],
+	   retractall(pMax(_)),
+	   asserta(pMax(2))
+	 ); 
+	 Jogada = Jogada1
+	).
 
 jogaMax(TabuleiroJogado, Peca, Profundidade, Valor, Jogada, Alpha, Beta) :-
 	TabuleiroJogado = [_,Tabuleiro],
