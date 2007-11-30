@@ -1,0 +1,41 @@
+\documentclass[dvips,12pt,a4paper]{article}
+\usepackage[brazilian]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+\usepackage{pslatex}
+\usepackage{graphics}
+\usepackage{indentfirst}
+
+\title{Trabalho Prático 2\\Jogo Qubic\\Inteligência Artificial}
+\author{Leandro Soriano Marcolino\\soriano@dcc.ufmg.br \and Rogério Vinhal Nunes\\rogervn@dcc.ufmg.br}
+
+\begin{document}
+\maketitle
+\newpage
+
+\section{Representação do tabuleiro}
+
+A representação do tabuleiro geral consiste em uma lista de 4 tabuleiros. Cada um desses tabuleiros consiste em uma lista de 4 linhas, onde cada uma dessas linhas possui 4 números, correspondentes às 4 colunas. Esses 4 números podem ser -1, 0 ou 1, onde -1 corresponde a uma posição ocupada pelo inimigo, 0 corresponde a uma posição vazia e 1 corresponde a uma posição ocupada pelo computador.
+
+Basicamente esta é a configuração:
+
+Tabuleiro Geral = [Tabuleiro1, Tabuleiro2, Tabuleiro3, Tabuleiro4]
+
+Tabuleiro = [Linha1. Linha2, Linha3, Linha4]
+
+Linha = [Coluna1, Coluna2, Coluna3, Coluna4]
+
+Coluna = -1, 0 ou 1.
+
+Um exemplo de tabuleiro preenchido com 1 peça do inimigo na posição (0,0,0) e uma peça do computador na posição (3,3,3) está descrito a seguir:
+
+[[[-1,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,1]]]
+
+\section{Heurística}
+
+A Heurística consiste de avaliar a possibilidade de uma jogada ter mais condições de vitória que as outras. Para isso, contamos o número de possibilidades de conexões que podem resultar em vitória para cada uma das posições vazias e multiplicamos possibilidades diversas de vitórias, a fim de preferir uma jogada com mais chances de vencer.
+
+Posições mais centrais no tabuleiro também possuem uma bonificação, já que elas são posições mais estratégicas quando consideradas situações iguais com as demais.
+
+\end{document}
