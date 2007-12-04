@@ -13,6 +13,10 @@
 \begin{document}
 \maketitle
 \newpage
+\section{Introdução}
+O Qubic \cite{wiki:qubic} é um jogo de estratégia jogado em uma matriz 4x4x4 criado por Parker Brothers no final dos anos 60. Os jogadores alternam turnos até o primeiro que consegue conectar quatro peças, em qualquer orientação.
+
+Nesse trabalho, iremos implementar uma versão do Qubic em Prolog, utilizando o algoritmo Minimax com poda Alpha-Beta \cite{wiki:minimax}. O programa será capaz de jogar pela rede, utilizando sockets.
 
 \section{Representação do tabuleiro}
 
@@ -22,7 +26,7 @@ Basicamente esta é a configuração:
 
 Tabuleiro Geral = [Tabuleiro1, Tabuleiro2, Tabuleiro3, Tabuleiro4]
 
-Tabuleiro = [Linha1. Linha2, Linha3, Linha4]
+Tabuleiro = [Linha1, Linha2, Linha3, Linha4]
 
 Linha = [Coluna1, Coluna2, Coluna3, Coluna4]
 
@@ -34,8 +38,63 @@ Um exemplo de tabuleiro preenchido com uma peça do inimigo na posição (0,0,0) e 
 
 \section{Heurística}
 
-A Heurística consiste de avaliar a possibilidade de uma jogada ter mais condições de vitória que as outras. Para isso, contamos o número de possibilidades de conexões que podem resultar em vitória para cada uma das posições vazias e multiplicamos possibilidades diversas de vitórias, a fim de preferir uma jogada com mais chances de vencer.
+%% A Heurística consiste de avaliar a possibilidade de uma jogada ter mais condições de vitória que as outras. Para isso, contamos o número de possibilidades de conexões que podem resultar em vitória para cada uma das posições vazias e multiplicamos possibilidades diversas de vitórias, a fim de preferir uma jogada com mais chances de vencer.
 
-Posições mais centrais no tabuleiro também possuem uma bonificação, já que elas são posições mais estratégicas quando consideradas situações iguais com as demais.
+%% Posições mais centrais no tabuleiro também possuem uma bonificação, já que elas são posições mais estratégicas quando consideradas situações iguais com as demais.
 
+O objetivo da heurística no algoritmo Minimax é avaliar quão bom para um jogador é um certo estado do tabuleiro, pois em geral não é possível explorar toda a árvore de jogadas em um tempo aceitável para o jogo. Em nossa implementação, a heurística consiste em fazer duas análises do tabuleiro: análise de conexões e análise de posições centrais. O valor retornado por essas análises é somado, dando o valor total do tabuleiro:
+
+\bigskip
+
+\begin{math}
+Valor(Peca) = analiseCentral(Peca) + analiseConexoes(Peca)
+\end{math}
+
+\bigskip
+
+O valor final de um tabuleiro é o valor dado pela heurística para o jogador, menos o valor dado para o adversário:
+
+\bigskip
+
+\begin{math}
+Valor_{Tabuleiro} = Valor(Jogador) - Valor(Adversario)
+\end{math}
+
+\bigskip
+
+\subsection{Análise Central}
+A análise central consiste em avaliar a presença de peças consideradas estrategicamente importantes para o jogo. As posições consideradas estrategicamente importantes são: $(1, 1)$, $(2,1)$, $(1,2)$, $(2,2)$, onde o primeiro número indica a linha e o segundo a coluna de uma dimensão qualquer. A posição 0 é a primeira posição de uma linha ou coluna. À cada dimensão é dado um peso diferente ao número de peças estrategicamente posicionadas, na nossa implementação damos pesos maiores às dimensões centrais. Assim, a fórmula da análise de peças centrais é dada por:
+
+\bigskip
+
+\begin{math}
+analiseCentral(Peca) = Peso_0 * Num_0 + Peso_1 * Num_1 + Peso_2 * Num_2 + Peso_3 * Num_3
+\end{math}
+
+\bigskip
+
+Onde $Num_i$ é o número de peças estrategicamente posicionadas identificadas na i-ésima dimensão e $Peso_i$ é o peso desse valor.
+
+\subsection{Análise de Conexões}
+A análise de conexões avalia o número de peças alinhadas presentes no tabuleiro. São contadas conexões de duas ou três peças. Para duas peças estarem conectadas, elas não precisam necessariamente estar uma ao lado da outra. Basta que não exista nenhuma peça do adversário presente na direção de alinhamento. As direção possíveis de alinhamento são todas as quais é possível ganhar alinhando quatro peças no Qubic (Horizontal, Vertical, Diagonal, Profundidade, Diagonal Tridimensional, Horizontal Tridimensional, Vertical Trimensional). Assim, o valor da análise de conexões é dado por:
+
+\bigskip
+
+\begin{math}
+analiseConexoes(Peca) = Peso_2 * NConexoes_2 + Peso_3 * NConexoes_3
+\end{math}
+
+\bigskip
+
+Onde $Peso_i$ é o peso de uma conexão de $i$ peças e $NConexoes_i$ é o número de conexões com esse número de peças.
+
+\section{Conclusão}
+Implementamos nesse trabalho um jogador artificial de Qubic em Prolog. O algoritmo implementado foi o Minimax, com poda Alpha e Beta. Nesse documento, apresentamos a representação do tabuleiro utilizada e a forma como a heurística de avaliação do tabuleiro foi planejada.
+
+Foi muito interessante observar o comportamento do jogador artificial. Devido à heurística que procurava alinhar peças, o jogador mostrou-se agressivo, abrindo possibilidades de vitória a cada oportunidade. Muitas vezes, ele nos força a fazer várias jogadas na defensiva. Mesmo explorando uma profundidade baixa na árvore de jogadas, o agente mostrou-se bem inteligente durante os jogos de teste.
+
+\begin{thebibliography}{2}
+\bibitem{wiki:qubic} Página da Wikipedia sobre o Qubic. Disponível em http://en.wikipedia.org/wiki/Qubic
+\bibitem{wiki:minimax} Página da Wikipedia sobre o Minimax. Disponível em http://en.wikipedia.org/wiki/Minimax
+\end{thebibliography}
 \end{document}
